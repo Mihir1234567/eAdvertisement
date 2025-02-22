@@ -1,0 +1,22 @@
+.main-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+.login-box{
+  padding: 2rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  width: 350px;
+  box-shadow: 7px 7px 15px rgb(135, 130, 130);}
+.login-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  text-align: left;
+}
+.errormsg{
+  color: red;
+}
