@@ -1,2 +1,51 @@
-1.agency name
-2.
+11.Additional Notes/Instructions: A multi-line text area for any extra information or specific instructions related to the ad.
+
+1.Ad title: A text field where the agency names the advertisement.
+2.Campaign Name: A dropdown or text field to assign the ad to a specific campaign.
+3.Ad Type/Format: Options (via radio buttons or a dropdown) to select the ad format (e.g., banner, video, pop-up, etc.).
+4.Ad Description: A multi-line text area for a brief overview or copy of the ad content.
+5.Creative Assets Upload: File upload fields for images, videos, or other media that will be used in the ad.
+6.Landing Page URL: A field to enter the URL where the ad directs viewers upon clicking.
+7.Target Audience Details:
+    Demographics: Age range, gender, etc. (selectable via checkboxes or dropdowns)
+    Location: Geographic targeting (text field or map-based selection)
+    Interests/Behaviors: Multi-select options for relevant interests or behaviors.
+8.Budget Settings:
+    Total Budget: Number input for the overall ad spend.
+    Daily Budget: Number input to set a daily spending limit.    
+9.Ad Schedule:
+    Start Date & Time: Date and time picker for when the ad goes live.
+    End Date & Time: Date and time picker for when the ad ends.
+10.Ad Placement Options: Multi-select options for where the ad will be distributed (e.g., Google Ads, Facebook, Instagram, LinkedIn).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
