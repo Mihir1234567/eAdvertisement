@@ -1,11 +1,60 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "./AgencyForm.css"; // Import your custom CSS
+import { useForm } from "react-hook-form";
 
 export const AgencyForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const submitHandler = (data) => {
+    console.log(data);
+  };
+  const validationSchema = {
+    validationAdTitle: {
+      required: {
+        value: true,
+        message: "*Please Enter Ad Title",
+      },
+    },
+    validationCampaignName: {
+      required: {
+        value: true,
+        message: "*Please Enter Campaign Name",
+      },
+    },
+    validationAdDescription: {
+      required: {
+        value: true,
+        message: "*Please Enter Ad Description",
+      },
+    },
+
+    validationURL: {
+      required: {
+        value: true,
+        message: "*Please Enter Your URL ",
+      },
+    },
+    validationTBudget: {
+      required: {
+        value: true,
+        message: "*Please Enter Total Budget",
+      },
+    },
+    validationDBudget: {
+      required: {
+        value: true,
+        message: "*Please Enter Daily Budget",
+      },
+    },
+  };
+
   return (
     <div className="container mt-5 form-container">
-      <form>
+      <form onSubmit={handleSubmit(submitHandler)}>
         <h2 className="text-center mb-4">Create Your Campaign</h2>
         <hr />
         {/* Section: Ad Details */}
@@ -20,8 +69,9 @@ export const AgencyForm = () => {
               className="form-control"
               id="adTitle"
               placeholder="Enter Ad Title"
-              required
+              {...register("AdTitle", validationSchema.validationAdTitle)}
             />
+            <span className="errormsg">{errors.AdTitle?.message}</span>
           </div>
           <div className="col-md-6">
             <label htmlFor="campaignName" className="form-label">
@@ -32,8 +82,12 @@ export const AgencyForm = () => {
               className="form-control"
               id="campaignName"
               placeholder="Enter Campaign Name"
-              required
+              {...register(
+                "CampaignName",
+                validationSchema.validationCampaignName
+              )}
             />
+            <span className="errormsg">{errors.CampaignName?.message}</span>
           </div>
         </div>
         <div className="row mb-3">
@@ -41,10 +95,8 @@ export const AgencyForm = () => {
             <label htmlFor="adType" className="form-label">
               Ad Type
             </label>
-            <select className="form-select" id="adType" required>
-              <option value="" disabled selected>
-                Select Ad Type
-              </option>
+            <select className="form-select" id="adType">
+              <option value="">Select Ad Type</option>
               <option>Banner</option>
               <option>Video</option>
               <option>Pop-Up</option>
@@ -60,7 +112,12 @@ export const AgencyForm = () => {
             id="adDescription"
             rows="3"
             placeholder="Enter ad description..."
+            {...register(
+              "AdDescription",
+              validationSchema.validationAdDescription
+            )}
           ></textarea>
+          <span className="errormsg">{errors.AdDescription?.message}</span>
         </div>
         {/* Section: Media */}
         <h4 className="mb-4 section-title">Media</h4>
@@ -84,7 +141,9 @@ export const AgencyForm = () => {
                 className="form-control"
                 id="url"
                 placeholder="Your unique URL path"
+                {...register("URL", validationSchema.validationURL)}
               />
+              <span className="errormsg">{errors.URL?.message}</span>
             </div>
           </div>
         </div>
@@ -215,8 +274,9 @@ export const AgencyForm = () => {
               className="form-control"
               id="totalBudget"
               placeholder="Enter Total Budget"
-              required
+              {...register("TBudget", validationSchema.validationTBudget)}
             />
+            <span className="errormsg">{errors.TBudget?.message}</span>
           </div>
           <div className="col-md-6">
             <label htmlFor="dailyBudget" className="form-label">
@@ -227,14 +287,15 @@ export const AgencyForm = () => {
               className="form-control"
               id="dailyBudget"
               placeholder="Enter Daily Budget"
-              required
+              {...register("DBudget", validationSchema.validationDBudget)}
             />
+            <span className="errormsg">{errors.DBudget?.message}</span>
           </div>
         </div>
         <div className="row mb-4">
           <div className="col-md-6">
             <label htmlFor="adStartDate" className="form-label">
-              Ad Starting Date &amp; Time:
+              Ad Starting Date & Time:
             </label>
             <input
               type="datetime-local"
@@ -245,7 +306,7 @@ export const AgencyForm = () => {
           </div>
           <div className="col-md-6">
             <label htmlFor="adEndDate" className="form-label">
-              Ad Ending Date &amp; Time:
+              Ad Ending Date & Time:
             </label>
             <input
               type="datetime-local"

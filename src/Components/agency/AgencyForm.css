@@ -87,3 +87,7 @@ textarea:focus {
     padding: 1.5rem;
   }
 }
+/* Error Message Color*/
+.errormsg {
+  color: red;
+}
