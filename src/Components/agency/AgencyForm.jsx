@@ -95,11 +95,11 @@ export const AgencyForm = () => {
             <label htmlFor="adType" className="form-label">
               Ad Type
             </label>
-            <select className="form-select" id="adType">
+            <select className="form-select" id="adType" {...register("adType")}>
               <option value="">Select Ad Type</option>
-              <option>Banner</option>
-              <option>Video</option>
-              <option>Pop-Up</option>
+              <option value="banner">Banner</option>
+              <option value="video">Video</option>
+              <option value="Popup">Pop-Up</option>
             </select>
           </div>
         </div>
@@ -158,6 +158,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="ageRange1"
+                  value={"5-18"}
+                  {...register("ageRange")}
                 />
                 <label className="form-check-label" htmlFor="ageRange1">
                   5-18
@@ -170,6 +172,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="ageRange2"
+                  value={"18-25"}
+                  {...register("ageRange")}
                 />
                 <label className="form-check-label" htmlFor="ageRange2">
                   18-25
@@ -182,6 +186,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="ageRange3"
+                  value={"25-40"}
+                  {...register("ageRange")}
                 />
                 <label className="form-check-label" htmlFor="ageRange3">
                   25-40
@@ -194,6 +200,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="ageRange4"
+                  value={"40-60"}
+                  {...register("ageRange")}
                 />
                 <label className="form-check-label" htmlFor="ageRange4">
                   40-60
@@ -206,6 +214,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="ageRange5"
+                  value={"60+"}
+                  {...register("ageRange")}
                 />
                 <label className="form-check-label" htmlFor="ageRange5">
                   60+
@@ -225,7 +235,7 @@ export const AgencyForm = () => {
                   name="gender"
                   id="genderMale"
                   value="male"
-                  defaultChecked
+                  {...register("gender")}
                 />
                 <label className="form-check-label" htmlFor="genderMale">
                   Male
@@ -240,6 +250,7 @@ export const AgencyForm = () => {
                   name="gender"
                   id="genderFemale"
                   value="female"
+                  {...register("gender")}
                 />
                 <label className="form-check-label" htmlFor="genderFemale">
                   Female
@@ -254,6 +265,7 @@ export const AgencyForm = () => {
                   name="gender"
                   id="genderBoth"
                   value="both"
+                  {...register("gender")}
                 />
                 <label className="form-check-label" htmlFor="genderBoth">
                   Both
@@ -302,6 +314,7 @@ export const AgencyForm = () => {
               className="form-control"
               id="adStartDate"
               name="adStartDate"
+              {...register("startingDateTime")}
             />
           </div>
           <div className="col-md-6">
@@ -313,6 +326,7 @@ export const AgencyForm = () => {
               className="form-control"
               id="adEndDate"
               name="adEndDate"
+              {...register("endingDateTime")}
             />
           </div>
         </div>
@@ -326,7 +340,10 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="placementGoogle"
+                  value={"googleAds"}
+                  {...register("adPlacementOptions")}
                 />
+
                 <label className="form-check-label" htmlFor="placementGoogle">
                   Google Ads
                 </label>
@@ -338,6 +355,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="placementFacebook"
+                  value={"facebook"}
+                  {...register("adPlacementOptions")}
                 />
                 <label className="form-check-label" htmlFor="placementFacebook">
                   Facebook
@@ -350,6 +369,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="placementInstagram"
+                  value={"instagram"}
+                  {...register("adPlacementOptions")}
                 />
                 <label
                   className="form-check-label"
@@ -365,6 +386,8 @@ export const AgencyForm = () => {
                   className="form-check-input"
                   type="checkbox"
                   id="placementLinkedIn"
+                  value={"linkedIn"}
+                  {...register("adPlacementOptions")}
                 />
                 <label className="form-check-label" htmlFor="placementLinkedIn">
                   LinkedIn
