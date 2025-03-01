@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const Login = () => {
   const {
@@ -9,8 +11,38 @@ export const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const submitHandler = (data) => {
-    console.log(data);
+  const submitHandler = async (data) => {
+    // console.log(data);
+
+    const res = await axios.post("/user/login", data);
+    console.log(res);
+    console.log(res.response.data.message);
+    console.log(res.data);
+    if (res.status === 201) {
+      toast.success("👍 LoggedIn Successfully!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    } else if (res.response.data.message === "Invalid Email") {
+      toast.error("Invalid Email", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    }
   };
   const validationSchema = {
     emailValidator: {

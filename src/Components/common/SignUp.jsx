@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const SignUp = () => {
   const [password, setPassword] = useState("");
@@ -12,8 +14,36 @@ export const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = (data) => {
-    console.log(data);
+  const submitHandler = async (data) => {
+    // console.log(data);
+    data.roleId = "67be931e4691b9d14711e51e";
+    const res = await axios.post("/user/signup", data);
+    console.log(res.data);
+    if (res.status === 201) {
+      toast.success("👍 User Created Successfully!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    } else {
+      toast.error("👎 User Not Created Due To Error!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    }
   };
 
   const validationSchema = {
@@ -54,7 +84,20 @@ export const SignUp = () => {
 
   return (
     <div>
-      <div className="main-container dgdeg">
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
+      <div className="main-container ">
         <div className="login-box">
           <h1>Sign Up</h1>
           <form onSubmit={handleSubmit(submitHandler)} className="login-form">
