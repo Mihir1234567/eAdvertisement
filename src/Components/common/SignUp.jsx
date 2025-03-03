@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const SignUp = () => {
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -15,8 +15,6 @@ export const SignUp = () => {
   } = useForm();
 
   const submitHandler = async (data) => {
-    // console.log(data);
-    data.roleId = "67be931e4691b9d14711e51e";
     const res = await axios.post("/user/signup", data);
     console.log(res.data);
     if (res.status === 201) {
@@ -31,6 +29,9 @@ export const SignUp = () => {
         theme: "colored",
         transition: Bounce,
       });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } else {
       toast.error("👎 User Not Created Due To Error!", {
         position: "top-left",
@@ -55,6 +56,16 @@ export const SignUp = () => {
       minLength: {
         value: 3,
         message: "*Minimum Name Length is 3",
+      },
+    },
+    ageValidator: {
+      required: {
+        value: true,
+        message: "Please Enter Your Age",
+      },
+      min: {
+        value: 20,
+        message: "Minimum Age is 20.",
       },
     },
     emailValidator: {
@@ -84,19 +95,7 @@ export const SignUp = () => {
 
   return (
     <div>
-      <ToastContainer
-        position="top-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
+      <ToastContainer />
       <div className="main-container ">
         <div className="login-box">
           <h1>Sign Up</h1>
@@ -123,6 +122,42 @@ export const SignUp = () => {
               />
               <span className="errormsg">{errors.email?.message}</span>
             </div>
+            <div>
+              <label htmlFor="age">Age</label>
+              <input
+                type="number"
+                className="form-control"
+                id="age"
+                {...register("age", validationSchema.ageValidator)}
+                placeholder="Enter Age"
+              />
+              <span className="errormsg">{errors.age?.message}</span>
+            </div>
+
+            <div>
+              <div className="col-md-6">
+                <label htmlFor="role" className="form-label">
+                  Role
+                </label>
+                <select
+                  className="form-select"
+                  id="role"
+                  required
+                  defaultValue="67be91bc4691b9d14711e517"
+                  {...register("roleId")}
+                >
+                  <option value="67be91bc4691b9d14711e517">User</option>
+                  <option value="67be931e4691b9d14711e51e">Agency</option>
+                </select>
+
+                <div className="invalid-feedback">
+                  Please select a valid state.
+                </div>
+              </div>
+
+              <span className="errormsg">{errors.roleId?.message}</span>
+            </div>
+
             <div>
               <label htmlFor="password">Password</label>
               <input

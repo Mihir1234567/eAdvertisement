@@ -11,6 +11,7 @@ import { AgencySidebar } from "./Components/agency/AgencySidebar";
 import { AgencyForm } from "./Components/agency/AgencyForm";
 import { UserSidebar } from "./Components/layouts/UserSidebar";
 import axios from "axios";
+import "./App.css";
 function App() {
   const [count, setCount] = useState(0);
   axios.defaults.baseURL = "http://localhost:3000";

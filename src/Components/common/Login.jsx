@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
@@ -11,14 +11,12 @@ export const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
   const submitHandler = async (data) => {
-    // console.log(data);
-
     const res = await axios.post("/user/login", data);
     console.log(res);
-    console.log(res.response.data.message);
-    console.log(res.data);
-    if (res.status === 201) {
+    console.log(res.response?.data?.message);
+    if (res.status === 200) {
       toast.success("👍 LoggedIn Successfully!", {
         position: "top-left",
         autoClose: 5000,
@@ -30,7 +28,14 @@ export const Login = () => {
         theme: "colored",
         transition: Bounce,
       });
-    } else if (res.response.data.message === "Invalid Email") {
+      localStorage.setItem("id", res.data.data.roleId._id);
+      localStorage.setItem("role", res.data.data.roleId.name);
+      if (res.data.data.roleId.name === "User") {
+        navigate("/user");
+      } else {
+        navigate("/agency");
+      }
+    } else if (res.response?.data?.message === "Invalid Email") {
       toast.error("Invalid Email", {
         position: "top-left",
         autoClose: 5000,
@@ -44,6 +49,7 @@ export const Login = () => {
       });
     }
   };
+
   const validationSchema = {
     emailValidator: {
       required: {
@@ -64,40 +70,52 @@ export const Login = () => {
   };
 
   return (
-    <div class="main-container">
-      <div class="login-box">
+    <div className="main-container">
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
+      <div className="login-box">
         <h1>Login</h1>
-        <form onSubmit={handleSubmit(submitHandler)} class="login-form">
-          <div class="form-group">
+        <form onSubmit={handleSubmit(submitHandler)} className="login-form">
+          <div className="form-group">
             <label htmlFor="email">Email address</label>
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="email"
               {...register("email", validationSchema.emailValidator)}
               placeholder="Enter email"
             />
           </div>
-          <span class="errormsg">{errors.email?.message}</span>
+          <span className="errormsg">{errors.email?.message}</span>
 
-          <div class="form-group">
+          <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="password"
               {...register("password", validationSchema.passwordValidator)}
               placeholder="Password"
             />
-            <span class="errormsg">{errors.password?.message}</span>
+            <span className="errormsg">{errors.password?.message}</span>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">
+          <button type="submit" className="btn btn-primary btn-block">
             Submit
           </button>
           <div>
-            Don't Have An Account?
-            <Link to="/signup">register</Link>
+            Don't Have An Account? <Link to="/signup">register</Link>
           </div>
         </form>
       </div>
