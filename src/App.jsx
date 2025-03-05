@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./assets/adminlte.css";
 import "./assets/adminlte.min.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProfile } from "./components/user/UserProfile";
 import { Login } from "./components/common/Login";
 import { SignUp } from "./components/common/SignUp";
@@ -13,25 +13,36 @@ import { UserSidebar } from "./Components/layouts/UserSidebar";
 import axios from "axios";
 import "./App.css";
 function App() {
-  const [count, setCount] = useState(0);
   axios.defaults.baseURL = "http://localhost:3000";
-
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/login" || location.pathname === "/Signup") {
+      document.body.class = "";
+    } else {
+      document.body.class =
+        "layout-fixed sidebar-expand-lg bg-body-tertiary sidebar-open app-loaded";
+    }
+  }, [location.pathname]);
   return (
-    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary app-loaded sidebar-open">
-      <div class="app-wrapper">
-        <Routes>
-          <Route path="/login" element={<Login></Login>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
-          <Route path="/user" element={<UserSidebar></UserSidebar>}>
-            <Route path="profile" element={<UserProfile></UserProfile>}></Route>
-          </Route>
-          <Route path="/agency" element={<AgencySidebar></AgencySidebar>}>
-            <Route path="form" element={<AgencyForm></AgencyForm>}></Route>
-          </Route>
-        </Routes>
-        {/* <UserSidebar></UserSidebar> */}
-      </div>
-    </body>
+    <div
+      class={
+        location.pathname === "/login" || location.pathname === "/Signup"
+          ? ""
+          : "app-wrapper"
+      }
+    >
+      <Routes>
+        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        <Route path="/user" element={<UserSidebar></UserSidebar>}>
+          <Route path="profile" element={<UserProfile></UserProfile>}></Route>
+        </Route>
+        <Route path="/agency" element={<AgencySidebar></AgencySidebar>}>
+          <Route path="form" element={<AgencyForm></AgencyForm>}></Route>
+        </Route>
+      </Routes>
+      {/* <UserSidebar></UserSidebar> */}
+    </div>
   );
 }
 

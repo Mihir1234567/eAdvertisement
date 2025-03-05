@@ -31,9 +31,13 @@ export const Login = () => {
       localStorage.setItem("id", res.data.data.roleId._id);
       localStorage.setItem("role", res.data.data.roleId.name);
       if (res.data.data.roleId.name === "User") {
-        navigate("/user");
+        setTimeout(() => {
+          navigate("/user");
+        }, 2000);
       } else {
-        navigate("/agency");
+        setTimeout(() => {
+          navigate("/agency");
+        }, 2000);
       }
     } else if (res.response?.data?.message === "Invalid Email") {
       toast.error("Invalid Email", {
