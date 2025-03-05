@@ -8,10 +8,11 @@ import { UserProfile } from "./components/user/UserProfile";
 import { Login } from "./components/common/Login";
 import { SignUp } from "./components/common/SignUp";
 import { AgencySidebar } from "./Components/agency/AgencySidebar";
-import { AgencyForm } from "./Components/agency/AgencyForm";
+// import { AgencyForm } from "./Components/agency/AgencyForm";
 import { UserSidebar } from "./Components/layouts/UserSidebar";
 import axios from "axios";
 import "./App.css";
+import { HordingForm } from "./Components/agency/HordingForm";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -38,7 +39,11 @@ function App() {
           <Route path="profile" element={<UserProfile></UserProfile>}></Route>
         </Route>
         <Route path="/agency" element={<AgencySidebar></AgencySidebar>}>
-          <Route path="form" element={<AgencyForm></AgencyForm>}></Route>
+          {/* <Route path="form" element={<AgencyForm></AgencyForm>}></Route> */}
+          <Route
+            path="hordingForm"
+            element={<HordingForm></HordingForm>}
+          ></Route>
         </Route>
       </Routes>
       {/* <UserSidebar></UserSidebar> */}
