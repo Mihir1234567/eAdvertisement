@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { AgencyNavbar } from "./AgencyNavbar";
 
 export const AgencySidebar = () => {
@@ -109,33 +109,10 @@ export const AgencySidebar = () => {
                 </ul>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon bi bi-box-seam-fill" />
-                  <p>
-                    Widgets
-                    <i className="nav-arrow bi bi-chevron-right" />
-                  </p>
-                </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <a href="./widgets/small-box.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Small Box</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="./widgets/info-box.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>info Box</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="./widgets/cards.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Cards</p>
-                    </a>
-                  </li>
-                </ul>
+                <Link to="hordingForm" className="nav-link">
+                  <i className="nav-icon bi bi-palette" />
+                  <p>Add Hoarding</p>
+                </Link>
               </li>
             </ul>
           </nav>
