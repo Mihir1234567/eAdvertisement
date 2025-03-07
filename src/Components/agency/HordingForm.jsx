@@ -47,6 +47,7 @@ export const HordingForm = () => {
     },
     hourlyRate: {
       required: { value: true, message: "*Please Enter Hourly Rate" },
+      min: { value: 200, message: "*Minimum Hourly rate is 200" },
     },
     hoardingURL: {
       required: { value: true, message: "*Please Enter Hoarding URL" },
