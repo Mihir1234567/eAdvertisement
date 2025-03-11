@@ -14,6 +14,7 @@ import axios from "axios";
 import "./App.css";
 import { HordingForm } from "./Components/agency/HordingForm";
 import PrivateRoutes from "./hooks/PrivateRouting";
+import LandingPage from "./Components/common/LandingPage";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -28,7 +29,9 @@ function App() {
   return (
     <div
       class={
-        location.pathname === "/login" || location.pathname === "/Signup"
+        location.pathname === "/login" ||
+        location.pathname === "/Signup" ||
+        location.pathname === "/"
           ? ""
           : "app-wrapper"
       }
@@ -36,6 +39,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        <Route path="/" element={<LandingPage></LandingPage>}></Route>
         <Route element={<PrivateRoutes></PrivateRoutes>}>
           <Route path="/user" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>

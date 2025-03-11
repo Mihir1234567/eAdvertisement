@@ -149,7 +149,6 @@ export const SignUp = () => {
                   <option value="67be91bc4691b9d14711e517">User</option>
                   <option value="67be931e4691b9d14711e51e">Agency</option>
                 </select>
-
                 <div className="invalid-feedback">
                   Please select a valid state.
                 </div>
