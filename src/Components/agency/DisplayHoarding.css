@@ -1,0 +1,95 @@
+/* Shared Styles from FullHoarding */
+.text-gradient {
+  background: linear-gradient(45deg, #2b50aa, #4a7ad6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.hover-scale:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(43,80,170,0.15) !important;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+}
+
+.bg-primary-opacity-10 {
+  background-color: rgba(43,80,170,0.1);
+}
+
+/* Card Specific Styles */
+.hoarding-card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.hoarding-card .card-body {
+  background: #fff;
+  z-index: 1;
+}
+
+.hoarding-image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hoarding-card:hover .hoarding-image {
+  transform: scale(1.05);
+}
+
+.btn-hover-scale {
+  transition: all 0.3s ease;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.btn-hover-scale:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(43,80,170,0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2.5rem !important;
+  }
+  
+  .hoarding-card {
+    margin-bottom: 1.5rem;
+  }
+}
+/* Image Link Styles */
+.image-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.image-link:hover .hoarding-image {
+  transform: scale(1.05);
+}
+
+.image-link:hover .image-overlay {
+  background: linear-gradient(45deg, rgba(43,80,170,0.1) 0%, rgba(0,0,0,0.03) 100%);
+}
+
+/* Accessibility */
+.image-link:focus {
+  outline: 2px solid rgba(43,80,170,0.5);
+  outline-offset: 2px;
+}

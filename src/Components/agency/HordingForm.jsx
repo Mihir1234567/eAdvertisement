@@ -18,8 +18,22 @@ export const HordingForm = () => {
 
   /* ----------------------------- //SubmitHandler ---------------------------- */
   const submitHandler = async (data) => {
+    data.userId = localStorage.getItem("id");
     console.log(data);
-    const res = await axios.post(`/hording/addHording`, data);
+
+    const formData = new FormData();
+    formData.append("hordingDimension", data.hordingDimension);
+    formData.append("hordingType", data.hordingType);
+    formData.append("hourlyRate", data.hourlyRate);
+    formData.append("image", data.image[0]);
+    formData.append("stateId", data.stateId);
+    formData.append("cityId", data.cityId);
+    formData.append("areaId", data.areaId);
+    formData.append("longitude", data.longitude);
+    formData.append("latitude", data.latitude);
+    formData.append("userId", data.userId);
+
+    const res = await axios.post(`/hording/addWithFile`, formData);
     console.log(res);
   };
 
@@ -69,6 +83,9 @@ export const HordingForm = () => {
     },
     hoardingType: {
       required: { value: true, message: "*Please Select Hoarding Type" },
+    },
+    hoardingImage: {
+      required: { value: true, message: "*Please Add Hoarding Image" },
     },
   };
 
@@ -142,7 +159,7 @@ export const HordingForm = () => {
           </div>
 
           {/* ------------------------------- hoardingURL ------------------------------- */}
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <div className="form-group">
               <label>hoarding URL</label>
               <input
@@ -154,6 +171,19 @@ export const HordingForm = () => {
               <span style={{ color: "red" }}>
                 {errors?.hordingURL?.message}
               </span>
+            </div>
+          </div> */}
+
+          <div className="col-md-6">
+            <div className="form-group">
+              <label>Add Hording Image</label>
+              <input
+                type="file"
+                className="form-control"
+                placeholder="https://example.com"
+                {...register("image", validationSchema.hoardingImage)}
+              />{" "}
+              <span style={{ color: "red" }}>{errors?.image?.message}</span>
             </div>
           </div>
         </div>

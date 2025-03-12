@@ -15,6 +15,8 @@ import "./App.css";
 import { HordingForm } from "./Components/agency/HordingForm";
 import PrivateRoutes from "./hooks/PrivateRouting";
 import LandingPage from "./Components/common/LandingPage";
+import { DisplayHoardings } from "./Components/agency/DisplayHoardings";
+import { FullHoarding } from "./Components/agency/FullHoarding";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -50,6 +52,10 @@ function App() {
               path="hordingForm"
               element={<HordingForm></HordingForm>}
             ></Route>
+            <Route path="displayHoarding">
+              <Route index element={<DisplayHoardings />} />
+              <Route path="fullHoarding/:id" element={<FullHoarding />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
