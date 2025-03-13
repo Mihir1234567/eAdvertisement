@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { Link, Outlet } from "react-router-dom";
 import { AgencyNavbar } from "./AgencyNavbar";
 
 export const AgencySidebar = () => {
+  //for closing sidebar...
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    console.log("toggleSidebar");
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
-      <AgencyNavbar></AgencyNavbar>
+      <AgencyNavbar toggleSidebar={toggleSidebar} />
       <aside
-        className="app-sidebar bg-body-secondary shadow"
+        className={`app-sidebar bg-body-secondary shadow ${
+          isSidebarOpen ? "open" : "d-none"
+        }`}
         data-bs-theme="dark"
       >
         <div className="sidebar-brand">
-          <a href="./index.html" className="brand-link">
-            <img
-              src="../../dist/assets/img/AdminLTELogo.png"
-              alt="AdminLTE Logo"
-              className="brand-image opacity-75 shadow"
-            />
-
-            <span className="brand-text fw-light">AdminLTE 4</span>
-          </a>
+          <Link to="/" className="brand-link">
+            <span className="brand-text fw-light">E-Advertisement</span>
+          </Link>
         </div>
 
         <div
@@ -45,40 +50,26 @@ export const AgencySidebar = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                <a href="#" className="nav-link active">
+                <Link to="hordingForm" className="nav-link active">
                   <i className="nav-icon bi bi-speedometer" />
                   <p>
-                    Dashboard
+                    ADD SCREEN
                     <i className="nav-arrow bi bi-chevron-right" />
                   </p>
-                </a>
+                </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="./index.html" className="nav-link active">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Dashboard v1</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="./index2.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Dashboard v2</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="./index3.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Dashboard v3</p>
-                    </a>
+                    <Link to="displayHoarding" className="nav-link active">
+                      <i className="nav-icon bi bi-speedometer" />
+                      <p>
+                        VIEW MY SCREENS
+                        <i className="nav-arrow bi bi-chevron-right" />
+                      </p>
+                    </Link>
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
-                <a href="./generate/theme.html" className="nav-link">
-                  <i className="nav-icon bi bi-palette" />
-                  <p>Theme Generate</p>
-                </a>
-              </li>
+
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon bi bi-box-seam-fill" />
@@ -107,12 +98,6 @@ export const AgencySidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
-              <li className="nav-item">
-                <Link to="hordingForm" className="nav-link">
-                  <i className="nav-icon bi bi-palette" />
-                  <p>Add Hoarding</p>
-                </Link>
               </li>
             </ul>
           </nav>

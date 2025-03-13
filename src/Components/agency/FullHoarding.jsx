@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./FullHoarding.css";
 
 export const FullHoarding = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [getHoarding, setGetHoarding] = useState(null);
 
   const getHoardingById = async () => {
@@ -13,6 +14,14 @@ export const FullHoarding = () => {
       setGetHoarding(res.data.data);
     } catch (error) {
       console.error("Error fetching hoarding:", error);
+    }
+  };
+  const deleteHoardingById = async () => {
+    try {
+      const res = await axios.delete(`/hording/deleteHording/${id}`);
+      console.log("Hoarding Deleted Successfully", res.data);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -38,7 +47,7 @@ export const FullHoarding = () => {
     <div className="container my-5">
       <div className="card shadow-lg overflow-hidden border-0">
         <div className="row g-0">
-          {/* Image Section - Now with Aspect Ratio Control */}
+          {/* Image Section */}
           <div className="col-lg-7 position-relative">
             <div className="hoarding-image-container ratio ratio-4x3">
               <img
@@ -50,7 +59,7 @@ export const FullHoarding = () => {
             </div>
           </div>
 
-          {/* Details Section - Improved Layout Structure */}
+          {/* Details Section */}
           <div className="col-lg-5 bg-light">
             <div className="card-body p-4 p-xl-5">
               <header className="mb-4">
@@ -127,15 +136,35 @@ export const FullHoarding = () => {
                   </DetailItem>
                 </div>
               </section>
-
               <footer className="mt-5">
-                <Link
-                  to={"/agency/displayHoarding"}
-                  className="btn btn-primary btn-hover-scale px-4 py-3 w-100"
-                >
-                  <i className="bi bi-arrow-left me-2"></i>
-                  Back to All Listings
-                </Link>
+                <div className="d-flex flex-column flex-lg-row gap-3">
+                  <Link
+                    to={`/agency/displayHoarding`}
+                    className="btn btn-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
+                  >
+                    <i className="bi bi-arrow-left me-2"></i>
+                    Back
+                  </Link>
+                  <Link
+                    to={`/agency/updateHoarding/${getHoarding._id}`}
+                    className="btn btn-outline-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
+                  >
+                    <i className="bi bi-pencil-square me-2"></i>
+                    Update
+                  </Link>
+                  <button
+                    onClick={() => {
+                      deleteHoardingById();
+                      setTimeout(() => {
+                        navigate("/agency/displayHoarding");
+                      }, 2000);
+                    }}
+                    className="btn btn-danger btn-hover-scale px-4 py-3 flex-grow-1 text-center"
+                  >
+                    <i className="bi bi-trash me-2"></i>
+                    Delete
+                  </button>
+                </div>
               </footer>
             </div>
           </div>

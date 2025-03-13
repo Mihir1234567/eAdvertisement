@@ -2,6 +2,8 @@
 .hoarding-image-container {
   position: relative;
   background: #f8f9fa;
+  border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .image-overlay {
@@ -10,7 +12,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .image-badge {
@@ -21,24 +24,31 @@
 }
 
 .hover-scale {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: zoom-in;
 }
 
 .hover-scale:hover {
   transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Detail Cards */
 .detail-card {
   padding: 1.5rem;
-  background: white;
+  background: #fff;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .bg-primary-soft {
-  background-color: rgba(43,80,170,0.08);
+  background-color: rgba(43, 80, 170, 0.08);
 }
 
 /* Typography Enhancements */
@@ -47,6 +57,7 @@
   line-height: 1.2;
 }
 
+/* Detail Item */
 .detail-item {
   position: relative;
 }
@@ -58,18 +69,18 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: rgba(0,0,0,0.08);
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* Button Enhancements */
 .btn-hover-scale {
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 0.75rem;
 }
 
 .btn-hover-scale:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(43,80,170,0.3);
+  box-shadow: 0 4px 15px rgba(43, 80, 170, 0.3);
 }
 
 /* Responsive Adjustments */
@@ -77,11 +88,11 @@
   .hoarding-image-container {
     border-radius: 0.75rem 0.75rem 0 0;
   }
-  
+
   .card-body {
     padding: 2rem !important;
   }
-  
+
   .display-5 {
     font-size: 2.25rem !important;
   }
