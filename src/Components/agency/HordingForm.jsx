@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./HordingForm.css";
+import { useNavigate } from "react-router-dom";
 
 export const HordingForm = () => {
   /* -------------------------------- //useForm ------------------------------- */
@@ -15,6 +16,7 @@ export const HordingForm = () => {
   const [getStates, setGetStates] = useState([]);
   const [getCities, setGetCities] = useState([]);
   const [getArea, setGetArea] = useState([]);
+  const Navigate = useNavigate();
 
   /* ----------------------------- //SubmitHandler ---------------------------- */
   const submitHandler = async (data) => {
@@ -158,22 +160,6 @@ export const HordingForm = () => {
             </div>
           </div>
 
-          {/* ------------------------------- hoardingURL ------------------------------- */}
-          {/* <div className="col-md-6">
-            <div className="form-group">
-              <label>hoarding URL</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="https://example.com"
-                {...register("hordingURL", validationSchema.hoardingURL)}
-              />{" "}
-              <span style={{ color: "red" }}>
-                {errors?.hordingURL?.message}
-              </span>
-            </div>
-          </div> */}
-
           <div className="col-md-6">
             <div className="form-group">
               <label>Add Hording Image</label>
@@ -286,7 +272,13 @@ export const HordingForm = () => {
         {/* --------------------------------- Submit --------------------------------- */}
         <div className="row mt-5">
           <div className="col-12">
-            <button type="submit" className="submit-btn">
+            <button
+              type="submit"
+              onClick={() => {
+                Navigate("/agency/displayHoarding");
+              }}
+              className="submit-btn"
+            >
               Register hoarding
             </button>
           </div>

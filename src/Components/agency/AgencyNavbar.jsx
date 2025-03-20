@@ -52,7 +52,16 @@ export const AgencyNavbar = ({ toggleSidebar }) => {
           </li>
 
           <li className="nav-item">
-            <button className="btn btn-danger">LOGOUT</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                localStorage.clear("id");
+                localStorage.clear("role");
+                window.location.reload();
+              }}
+            >
+              LOGOUT
+            </button>
             {/* <a className="nav-link" href="#" data-lte-toggle="fullscreen">
               <i data-lte-icon="maximize" className="bi bi-arrows-fullscreen" />
               <i

@@ -18,6 +18,8 @@ import LandingPage from "./Components/common/LandingPage";
 import { DisplayHoardings } from "./Components/agency/DisplayHoardings";
 import { FullHoarding } from "./Components/agency/FullHoarding";
 import { UpdateHoarding } from "./Components/agency/UpdateHoarding";
+import { Booking } from "./Components/user/Booking";
+import { FullBookedHoarding } from "./Components/user/Fullbookedhosrding";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -46,6 +48,11 @@ function App() {
         <Route element={<PrivateRoutes></PrivateRoutes>}>
           <Route path="/user" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>
+            <Route path="booking" element={<Booking></Booking>}></Route>
+            <Route
+              path="fullHoardingUser/:id"
+              element={<FullBookedHoarding></FullBookedHoarding>}
+            ></Route>
           </Route>
           <Route path="/agency" element={<AgencySidebar></AgencySidebar>}>
             {/* <Route path="form" element={<AgencyForm></AgencyForm>}></Route> */}

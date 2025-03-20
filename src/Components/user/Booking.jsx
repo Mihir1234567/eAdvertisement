@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./DisplayHoarding.css";
+// import "./DisplayHoarding.css";
 import { Link } from "react-router-dom";
 
-export const DisplayHoardings = () => {
+export const Booking = () => {
   const [getHoardings, setGetHoardings] = useState([]);
 
   const getAllHoardings = async () => {
     try {
-      const res = await axios.get(
-        `/hording/getHordingsByUserId/${localStorage.getItem("id")}`
-      );
+      const res = await axios.get(`/hording/getAllHoardings`);
       setGetHoardings(res.data.data);
     } catch (error) {
       console.error("Error fetching hoardings:", error);
@@ -24,7 +22,7 @@ export const DisplayHoardings = () => {
   return (
     <div className="container my-5 hoarding-container">
       <h2 className="text-center mb-5 display-4 fw-bold text-gradient">
-        Your Hoardings
+        Hoardings
       </h2>
       {getHoardings.length === 0 ? (
         <div className="text-center py-5">
@@ -37,7 +35,7 @@ export const DisplayHoardings = () => {
             <div key={hoarding.id} className="col-xl-4 col-md-6">
               <div className="card hoarding-card h-100 shadow-lg hover-scale">
                 <Link
-                  to={`fullHoarding/${hoarding._id}`}
+                  to={`/user/fullHoardingUser/${hoarding._id}`}
                   className="image-wrapper ratio ratio-4x3 image-link"
                 >
                   <img
@@ -61,7 +59,7 @@ export const DisplayHoardings = () => {
                     {hoarding.hordingDimension}
                   </p>
                   <Link
-                    to={`fullHoarding/${hoarding._id}`}
+                    to={`/user/fullHoardingUser/${hoarding._id}`}
                     className="btn btn-primary btn-hover-scale mt-auto align-self-stretch"
                   >
                     <i className="bi bi-arrow-right me-2"></i>

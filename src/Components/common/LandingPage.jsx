@@ -8,7 +8,7 @@ const LandingPage = () => {
     <div className="landing-container">
       <header className="header">
         <div className="container">
-          <h1>Ad Project</h1>
+          <h1>E-Advertisement</h1>
         </div>
       </header>
 
