@@ -119,16 +119,17 @@ export const FullHoarding = () => {
 
                 {/* Location Details */}
                 <div className="detail-card bg-primary-soft rounded-3 p-3 mb-4">
-                  <DetailItem label="City" icon="bi-building">
-                    <span className="text-dark fw-medium">
-                      {getHoarding.cityId.name}
-                    </span>
-                  </DetailItem>
                   <DetailItem label="Area" icon="bi-pin-map">
                     <span className="text-dark fw-medium">
                       {getHoarding.areaId.name}
                     </span>
                   </DetailItem>
+                  <DetailItem label="City" icon="bi-building">
+                    <span className="text-dark fw-medium">
+                      {getHoarding.cityId.name}
+                    </span>
+                  </DetailItem>
+
                   <DetailItem label="State" icon="bi-globe">
                     <span className="text-dark fw-medium">
                       {getHoarding.stateId.name}

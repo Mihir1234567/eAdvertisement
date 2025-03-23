@@ -19,5 +19,9 @@
     "titleBar.inactiveBackground": "#ffc0cb99",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.color": "pink"
+  "peacock.color": "pink",
+  "editor.tokenColorCustomizations": {
+    "comments": "",
+    "textMateRules": []
+  }
 }

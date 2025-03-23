@@ -34,9 +34,11 @@ export const HordingForm = () => {
     formData.append("longitude", data.longitude);
     formData.append("latitude", data.latitude);
     formData.append("userId", data.userId);
+    console.log(formData);
 
     const res = await axios.post(`/hording/addWithFile`, formData);
     console.log(res);
+    Navigate("/agency/displayHoarding");
   };
 
   /* ----------------------------- //GetAllStates ----------------------------- */
@@ -272,13 +274,7 @@ export const HordingForm = () => {
         {/* --------------------------------- Submit --------------------------------- */}
         <div className="row mt-5">
           <div className="col-12">
-            <button
-              type="submit"
-              onClick={() => {
-                Navigate("/agency/displayHoarding");
-              }}
-              className="submit-btn"
-            >
+            <button type="submit" className="submit-btn">
               Register hoarding
             </button>
           </div>

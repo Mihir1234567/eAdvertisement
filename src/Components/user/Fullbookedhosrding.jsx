@@ -111,14 +111,14 @@ export const FullBookedHoarding = () => {
 
                 {/* Location Details */}
                 <div className="detail-card bg-primary-soft rounded-3 p-3 mb-4">
-                  <DetailItem label="City" icon="bi-building">
-                    <span className="text-dark fw-medium">
-                      {getHoarding.cityId.name}
-                    </span>
-                  </DetailItem>
                   <DetailItem label="Area" icon="bi-pin-map">
                     <span className="text-dark fw-medium">
                       {getHoarding.areaId.name}
+                    </span>
+                  </DetailItem>
+                  <DetailItem label="City" icon="bi-building">
+                    <span className="text-dark fw-medium">
+                      {getHoarding.cityId.name}
                     </span>
                   </DetailItem>
                   <DetailItem label="State" icon="bi-globe">
@@ -138,11 +138,11 @@ export const FullBookedHoarding = () => {
                     Back
                   </Link>
                   <Link
-                    to={`/agency/updateHoarding/${getHoarding._id}`}
+                    to={`/user/booking/${getHoarding._id}`}
                     className="btn btn-outline-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
                   >
                     <i className="bi bi-pencil-square me-2"></i>
-                    Update
+                    Book
                   </Link>
                 </div>
               </footer>

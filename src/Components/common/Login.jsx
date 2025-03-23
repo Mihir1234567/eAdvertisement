@@ -28,7 +28,7 @@ export const Login = () => {
         theme: "colored",
         transition: Bounce,
       });
-      localStorage.setItem("id", res.data.data.roleId._id);
+      localStorage.setItem("id", res.data.data._id);
       localStorage.setItem("role", res.data.data.roleId.name);
       if (res.data.data.roleId.name === "User") {
         setTimeout(() => {

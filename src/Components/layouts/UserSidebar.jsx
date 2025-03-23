@@ -51,7 +51,7 @@ export const UserSidebar = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                <Link to="hordingForm" className="nav-link active">
+                <Link to="viewHoardings" className="nav-link active">
                   <i className="nav-icon bi bi-speedometer" />
                   <p>
                     View Hoardings
@@ -60,10 +60,10 @@ export const UserSidebar = () => {
                 </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="displayHoarding" className="nav-link active">
+                    <Link to="/user/viewBookings" className="nav-link active">
                       <i className="nav-icon bi bi-speedometer" />
                       <p>
-                        VIEW MY SCREENS
+                        VIEW Your Bookings
                         <i className="nav-arrow bi bi-chevron-right" />
                       </p>
                     </Link>
