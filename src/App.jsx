@@ -6,7 +6,6 @@ import "./assets/adminlte.min.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProfile } from "./components/user/UserProfile";
 import { Login } from "./components/common/Login";
-import { SignUp } from "./components/common/SignUp";
 import { AgencySidebar } from "./Components/agency/AgencySidebar";
 // import { AgencyForm } from "./Components/agency/AgencyForm";
 import { UserSidebar } from "./Components/layouts/UserSidebar";
@@ -22,6 +21,9 @@ import { FullBookedHoarding } from "./Components/user/Fullbookedhosrding";
 import { ViewHoardings } from "./Components/user/ViewHoardings";
 import { Booking } from "./Components/user/Booking";
 import { ViewYourBookings } from "./Components/user/ViewYourBookings";
+import { SignUp } from "./Components/common/SignUp";
+import { ResetPassword } from "./Components/common/ResetPAssword";
+import { ForgotPassword } from "./Components/common/ForgotPassword";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -47,6 +49,16 @@ function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="/" element={<LandingPage></LandingPage>}></Route>
+        <Route
+          path="/resetPassword/:token"
+          element={<ResetPassword></ResetPassword>}
+        ></Route>
+
+        <Route  
+          path="/forgotPassword"
+          element={<ForgotPassword></ForgotPassword>}
+        ></Route>
+
         <Route element={<PrivateRoutes></PrivateRoutes>}>
           <Route path="/user" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>

@@ -60,10 +60,7 @@ export const Login = () => {
         value: true,
         message: "*Please Enter Your Email",
       },
-      pattern: {
-        value: /[a-zA-Z0-9][@]{1}[a-zA-Z]/,
-        message: "*Invalid Email",
-      },
+     
     },
     passwordValidator: {
       required: {
@@ -106,7 +103,7 @@ export const Login = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type="text"
               className="form-control"
               id="password"
               {...register("password", validationSchema.passwordValidator)}
@@ -120,6 +117,9 @@ export const Login = () => {
           </button>
           <div>
             Don't Have An Account? <Link to="/signup">register</Link>
+          </div>
+          <div>
+            Forget Password <Link to="/forgotPassword">Forget Password?</Link>
           </div>
         </form>
       </div>

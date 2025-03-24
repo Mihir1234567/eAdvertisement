@@ -73,10 +73,7 @@ export const SignUp = () => {
         value: true,
         message: "*Please Enter This Field",
       },
-      pattern: {
-        value: /[a-zA-Z0-9][@]{1}[a-zA-Z]/,
-        message: "*Invalid Email",
-      },
+    
     },
     passwordValidator: {
       required: {
@@ -186,7 +183,7 @@ export const SignUp = () => {
             </button>
             <div>
               Already Have An Account?
-              <Link to="/login">LogIn</Link>
+              <Link to="/login/:">LogIn</Link>
             </div>
           </form>
         </div>
