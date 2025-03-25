@@ -22,7 +22,7 @@ const LandingPage = () => {
           </p>
 
           <div className="cta-buttons">
-            <Link to="/login" className="btn btn-primary btn-lg">
+            <Link to="/login/blank" className="btn btn-primary btn-lg">
               Login
             </Link>
             <Link to="/signup" className="btn btn-success btn-lg">

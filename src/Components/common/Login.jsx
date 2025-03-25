@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
@@ -12,12 +12,29 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const status = useParams().status;
   const submitHandler = async (data) => {
     const res = await axios.post("/user/login", data);
     console.log(res);
     console.log(res.response?.data?.message);
+
     if (res.status === 200) {
-      toast.success("👍 LoggedIn Successfully!", {
+      localStorage.setItem("id", res.data.data._id);
+      localStorage.setItem("role", res.data.data.roleId.name);
+      if (res.data.data.roleId.name === "User") {
+        setTimeout(() => {
+          navigate("/user/loggedin");
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          navigate("/agency/loggedin");
+        }, 2000);
+      }
+    }
+  };
+  useEffect(() => {
+    if (status === "reset") {
+      toast.success("Password Reset Successfully!", {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -28,19 +45,20 @@ export const Login = () => {
         theme: "colored",
         transition: Bounce,
       });
-      localStorage.setItem("id", res.data.data._id);
-      localStorage.setItem("role", res.data.data.roleId.name);
-      if (res.data.data.roleId.name === "User") {
-        setTimeout(() => {
-          navigate("/user");
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          navigate("/agency");
-        }, 2000);
-      }
-    } else if (res.response?.data?.message === "Invalid Email") {
-      toast.error("Invalid Email", {
+    } else if (status === "register") {
+      toast.success("User Registered Successfully!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    } else if (status === "logout") {
+      toast.success("User LoggedOut Successfully!", {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -52,7 +70,7 @@ export const Login = () => {
         transition: Bounce,
       });
     }
-  };
+  }, []);
 
   const validationSchema = {
     emailValidator: {
@@ -60,7 +78,6 @@ export const Login = () => {
         value: true,
         message: "*Please Enter Your Email",
       },
-     
     },
     passwordValidator: {
       required: {
@@ -85,6 +102,7 @@ export const Login = () => {
         theme="light"
         transition={Bounce}
       />
+
       <div className="login-box">
         <h1>Login</h1>
         <form onSubmit={handleSubmit(submitHandler)} className="login-form">

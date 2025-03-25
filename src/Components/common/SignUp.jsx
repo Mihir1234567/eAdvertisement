@@ -16,22 +16,9 @@ export const SignUp = () => {
 
   const submitHandler = async (data) => {
     const res = await axios.post("/user/signup", data);
-    console.log(res.data);
+    console.log(res);
     if (res.status === 201) {
-      toast.success("👍 User Created Successfully!", {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      navigate("/login/register");
     } else {
       toast.error("👎 User Not Created Due To Error!", {
         position: "top-left",
@@ -73,7 +60,6 @@ export const SignUp = () => {
         value: true,
         message: "*Please Enter This Field",
       },
-    
     },
     passwordValidator: {
       required: {
@@ -183,7 +169,7 @@ export const SignUp = () => {
             </button>
             <div>
               Already Have An Account?
-              <Link to="/login/:">LogIn</Link>
+              <Link to="/login/blank">LogIn</Link>
             </div>
           </form>
         </div>

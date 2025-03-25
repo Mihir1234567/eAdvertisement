@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { Login } from "../components/common/Login";
 
 const useAuth = () => {
   const [authState, setAuthState] = useState({ isLoggedin: false, role: "" });
@@ -24,7 +23,7 @@ const PrivateRoutes = () => {
   return auth.isLoggedin ? (
     <Outlet></Outlet>
   ) : (
-    <Navigate to="/login"></Navigate>
+    <Navigate to="/login/blank"></Navigate>
   );
 };
 export default PrivateRoutes;

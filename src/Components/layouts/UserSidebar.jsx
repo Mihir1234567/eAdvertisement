@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { UserNavbar } from "./UserNavbar";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const UserSidebar = () => {
-  //for closing sidebar...
+  const status = useParams().status;
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     console.log("toggleSidebar");
     setSidebarOpen(!isSidebarOpen);
   };
+  useEffect(() => {
+    if (status === "login") {
+      toast.success("Logged In Successfully!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    }
+  }, []);
 
   return (
     <>
       {/* <AgencyNavbar toggleSidebar={toggleSidebar} /> */}
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
       <UserNavbar toggleSidebar={toggleSidebar}></UserNavbar>
       <aside
         className={`app-sidebar bg-body-secondary shadow ${

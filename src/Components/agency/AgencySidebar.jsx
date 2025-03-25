@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { AgencyNavbar } from "./AgencyNavbar";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const AgencySidebar = () => {
+  const status = useParams().status;
+
   //for closing sidebar...
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
@@ -12,8 +15,38 @@ export const AgencySidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  useEffect(() => {
+    if (status === "loggedin") {
+      toast.success("Logged In Successfully!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+    }
+  }, []);
+
   return (
     <>
+      {" "}
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
       <AgencyNavbar toggleSidebar={toggleSidebar} />
       <aside
         className={`app-sidebar bg-body-secondary shadow ${

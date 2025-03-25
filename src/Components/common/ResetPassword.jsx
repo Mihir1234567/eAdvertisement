@@ -1,9 +1,11 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const ResetPassword = () => {
+  const navigate = useNavigate();
   const token = useParams().token;
   const { register, handleSubmit } = useForm();
 
@@ -15,7 +17,7 @@ export const ResetPassword = () => {
     console.log(obj);
 
     const res = await axios.post("/user/resetPassword", obj);
-
+    navigate(`/login/reset`);
     console.log(res);
   };
   return (

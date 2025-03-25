@@ -1,8 +1,9 @@
 import React from "react";
 import hamburgermenu from "../../assets/images/hamburgermenu.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const UserNavbar = ({ toggleSidebar }) => {
+  const navigate = useNavigate();
   return (
     <nav className="app-header navbar navbar-expand bg-body">
       {/*begin::Container*/}
@@ -57,7 +58,7 @@ export const UserNavbar = ({ toggleSidebar }) => {
               onClick={() => {
                 localStorage.clear("id");
                 localStorage.clear("role");
-                window.location.reload();
+                navigate("/login/logout");
               }}
             >
               LOGOUT

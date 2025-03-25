@@ -5,7 +5,6 @@ import "./assets/adminlte.css";
 import "./assets/adminlte.min.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserProfile } from "./components/user/UserProfile";
-import { Login } from "./components/common/Login";
 import { AgencySidebar } from "./Components/agency/AgencySidebar";
 // import { AgencyForm } from "./Components/agency/AgencyForm";
 import { UserSidebar } from "./Components/layouts/UserSidebar";
@@ -24,6 +23,7 @@ import { ViewYourBookings } from "./Components/user/ViewYourBookings";
 import { SignUp } from "./Components/common/SignUp";
 import { ResetPassword } from "./Components/common/ResetPAssword";
 import { ForgotPassword } from "./Components/common/ForgotPassword";
+import { Login } from "./Components/common/Login";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -46,7 +46,7 @@ function App() {
       }
     >
       <Routes>
-        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/login/:status" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="/" element={<LandingPage></LandingPage>}></Route>
         <Route
@@ -54,13 +54,13 @@ function App() {
           element={<ResetPassword></ResetPassword>}
         ></Route>
 
-        <Route  
+        <Route
           path="/forgotPassword"
           element={<ForgotPassword></ForgotPassword>}
         ></Route>
 
         <Route element={<PrivateRoutes></PrivateRoutes>}>
-          <Route path="/user" element={<UserSidebar></UserSidebar>}>
+          <Route path="/user/:status" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>
             <Route
               path="viewHoardings"
@@ -76,7 +76,10 @@ function App() {
               element={<ViewYourBookings></ViewYourBookings>}
             ></Route>
           </Route>
-          <Route path="/agency" element={<AgencySidebar></AgencySidebar>}>
+          <Route
+            path="/agency/:status"
+            element={<AgencySidebar></AgencySidebar>}
+          >
             {/* <Route path="form" element={<AgencyForm></AgencyForm>}></Route> */}
             <Route
               path="hordingForm"
