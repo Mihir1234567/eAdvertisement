@@ -13,49 +13,12 @@ export const Booking = () => {
     formState: { errors },
   } = useForm();
 
-  const Navigate = useNavigate();
-  /* ---------------------------- DateTime Splitter --------------------------- */
-  const [startDateTime, setStartDateTime] = useState("");
-  const [endDateTime, setEndDateTime] = useState("");
-  const [totalCost, setTotalCost] = useState(0);
-  const [hoursDiff, setHoursDiff] = useState(0);
-  // const getHoarding = async () => {
-  //   const res = await axios.get(`/hording/${Hoarding_Id}`);
-  //   console.log("Hoarding", res);
-  //   const hourlyRate = res.data.data.hourlyRate;
-  // };
-  const calculateCost = async () => {
-    const res = await axios.get(`/hording/${Hoarding_Id}`);
-    //  console.log("Hoarding", res);
-    setTimeout(() => {
-      const hourlyRate = res.data.data.hourlyRate;
-      // Convert input strings into Date objects
-      const startDate = new Date(startDateTime);
-      const endDate = new Date(endDateTime);
-
-      // Calculate the difference in milliseconds
-      const diffMs = endDate - startDate;
-
-      // Convert milliseconds to hours
-      const diffHours = diffMs / (1000 * 60 * 60);
-
-      // Update state with the calculated hours
-      setHoursDiff(diffHours);
-
-      // Calculate the total cost based on hourly rate
-      setTotalCost(diffHours * hourlyRate);
-    }, 2000);
-  };
+  const navigate = useNavigate();
   /* --------------------------- Submit Handler ------------------------------ */
   const submitHandler = async (data) => {
     data.userId = localStorage.getItem("id");
     data.Hoarding_Id = Hoarding_Id;
     console.log(data);
-    setStartDateTime(data.Start_Time);
-    setEndDateTime(data.End_Time);
-    setTotalCost();
-    console.log(totalCost);
-    console.log(hoursDiff);
 
     const formData = new FormData();
     formData.append("image", data.image[0]);
@@ -88,9 +51,7 @@ export const Booking = () => {
   };
 
   /* -------------------------------- useEffect ------------------------------ */
-  useEffect(() => {
-    calculateCost();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="hording-form-container">
@@ -131,21 +92,9 @@ export const Booking = () => {
                 type="file"
                 className="form-control"
                 placeholder="https://example.com"
-                onChange={() => {
-                  splitDateTime(startDateTime);
-                  splitDateTime(endDateTime);
-                }}
                 {...register("image", validationSchema.adImage)}
               />
               <span style={{ color: "red" }}>{errors?.image?.message}</span>
-              <button
-                onClick={() => {
-                  calculateCost();
-                }}
-              >
-                Calculate Total Cost
-              </button>
-              <span>{totalCost}</span>
             </div>
           </div>
         </div>

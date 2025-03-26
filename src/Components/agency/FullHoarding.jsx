@@ -140,14 +140,14 @@ export const FullHoarding = () => {
               <footer className="mt-5">
                 <div className="d-flex flex-column flex-lg-row gap-3">
                   <Link
-                    to={`/agency/displayHoarding`}
+                    to={`/agency/blank/displayHoarding`}
                     className="btn btn-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
                   >
                     <i className="bi bi-arrow-left me-2"></i>
                     Back
                   </Link>
                   <Link
-                    to={`/agency/updateHoarding/${getHoarding._id}`}
+                    to={`/agency/blank/updateHoarding/${getHoarding._id}`}
                     className="btn btn-outline-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
                   >
                     <i className="bi bi-pencil-square me-2"></i>
@@ -157,7 +157,7 @@ export const FullHoarding = () => {
                     onClick={() => {
                       deleteHoardingById();
                       setTimeout(() => {
-                        navigate("/agency/displayHoarding");
+                        navigate("/agency/blank/displayHoarding");
                       }, 2000);
                     }}
                     className="btn btn-danger btn-hover-scale px-4 py-3 flex-grow-1 text-center"

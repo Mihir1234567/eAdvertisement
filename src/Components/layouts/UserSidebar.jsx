@@ -13,7 +13,7 @@ export const UserSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
   useEffect(() => {
-    if (status === "login") {
+    if (status === "loggedin") {
       toast.success("Logged In Successfully!", {
         position: "top-left",
         autoClose: 5000,

@@ -138,7 +138,7 @@ export const FullBookedHoarding = () => {
                     Back
                   </Link>
                   <Link
-                    to={`/user/booking/${getHoarding._id}`}
+                    to={`/user/blank/booking/${getHoarding._id}`}
                     className="btn btn-outline-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
                   >
                     <i className="bi bi-pencil-square me-2"></i>

@@ -38,7 +38,7 @@ export const HordingForm = () => {
 
     const res = await axios.post(`/hording/addWithFile`, formData);
     console.log(res);
-    Navigate("/agency/displayHoarding");
+    Navigate("/agency/blank/displayHoarding");
   };
 
   /* ----------------------------- //GetAllStates ----------------------------- */

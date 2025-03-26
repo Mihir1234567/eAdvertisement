@@ -35,7 +35,7 @@ export const ViewHoardings = () => {
             <div key={hoarding.id} className="col-xl-4 col-md-6">
               <div className="card hoarding-card h-100 shadow-lg hover-scale">
                 <Link
-                  to={`/user/fullHoardingUser/${hoarding._id}`}
+                  to={`/user/blank/fullHoardingUser/${hoarding._id}`}
                   className="image-wrapper ratio ratio-4x3 image-link"
                 >
                   <img
@@ -59,7 +59,7 @@ export const ViewHoardings = () => {
                     {hoarding.hordingDimension}
                   </p>
                   <Link
-                    to={`/user/fullHoardingUser/${hoarding._id}`}
+                    to={`/user/blank/fullHoardingUser/${hoarding._id}`}
                     className="btn btn-primary btn-hover-scale mt-auto align-self-stretch"
                   >
                     <i className="bi bi-arrow-right me-2"></i>
