@@ -80,7 +80,10 @@ export const UserSidebar = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                <Link to="viewHoardings" className="nav-link active">
+                <Link
+                  to="/user/blank/viewHoardings"
+                  className="nav-link active"
+                >
                   <i className="nav-icon bi bi-speedometer" />
                   <p>
                     View Hoardings
@@ -89,43 +92,37 @@ export const UserSidebar = () => {
                 </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <Link to="/user/viewBookings" className="nav-link active">
+                    <Link
+                      to="/user/blank/viewBookings"
+                      className="nav-link active"
+                    >
                       <i className="nav-icon bi bi-speedometer" />
                       <p>
-                        VIEW Your Bookings
+                        View Your Bookings
                         <i className="nav-arrow bi bi-chevron-right" />
                       </p>
                     </Link>
                   </li>
-                </ul>
-              </li>
-
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon bi bi-box-seam-fill" />
-                  <p>
-                    Widgets
-                    <i className="nav-arrow bi bi-chevron-right" />
-                  </p>
-                </a>
-                <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="./widgets/small-box.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Small Box</p>
-                    </a>
+                    <Link to="/user/blank/addAd" className="nav-link active">
+                      <i className="nav-icon bi bi-speedometer" />
+                      <p>
+                        Add Your Ad
+                        <i className="nav-arrow bi bi-chevron-right" />
+                      </p>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a href="./widgets/info-box.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>info Box</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="./widgets/cards.html" className="nav-link">
-                      <i className="nav-icon bi bi-circle" />
-                      <p>Cards</p>
-                    </a>
+                    <Link
+                      to="/user/blank/viewYourAds"
+                      className="nav-link active"
+                    >
+                      <i className="nav-icon bi bi-speedometer" />
+                      <p>
+                        View Your Ads
+                        <i className="nav-arrow bi bi-chevron-right" />
+                      </p>
+                    </Link>
                   </li>
                 </ul>
               </li>

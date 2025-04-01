@@ -10,7 +10,7 @@ export const ViewYourBookings = () => {
     try {
       const res = await axios.get(`/booking/getBookingByUserId/${id}`);
       setGetHoardings(res.data.data);
-      console.log(res.data);
+      console.log(res.data.data);
     } catch (error) {
       console.error("Error fetching hoardings:", error);
     }
@@ -23,7 +23,7 @@ export const ViewYourBookings = () => {
   return (
     <div className="container my-5 hoarding-container">
       <h2 className="text-center mb-5 display-4 fw-bold text-gradient">
-        Hoardings
+        Booked Hoardings
       </h2>
       {getHoardings.length === 0 ? (
         <div className="text-center py-5">
@@ -36,31 +36,28 @@ export const ViewYourBookings = () => {
             <div key={hoarding.id} className="col-xl-4 col-md-6">
               <div className="card hoarding-card h-100 shadow-lg hover-scale">
                 <Link
-                  to={`/user/fullHoardingUser/${hoarding._id}`}
+                  to={`/user/blank/bookingDetails/${hoarding._id}`}
                   className="image-wrapper ratio ratio-4x3 image-link"
                 >
                   <img
                     className="hoarding-image img-fluid rounded-top"
-                    src={hoarding.hordingURL}
-                    alt={`${hoarding.hordingType} hoarding`}
+                    src={hoarding.AdId?.AdURL}
+                    alt={`${hoarding.AdId?.AdName} hoarding`}
                   />
                   <div className="image-overlay"></div>
                 </Link>
                 <div className="card-body p-4 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-start mb-3">
                     <h5 className="card-title fs-5 fw-bold text-truncate pe-3">
-                      {hoarding.hordingType}
+                      {hoarding.AdId?.AdName}
                     </h5>
-                    <span className="badge bg-primary-opacity-10 text-primary rounded-pill">
-                      {hoarding.cityId?.name}
-                    </span>
                   </div>
                   <p className="card-text text-muted mb-4">
                     <i className="bi bi-rulers me-2"></i>
-                    {hoarding.hordingDimension}
+                    {hoarding.AdId?.AdContent}
                   </p>
                   <Link
-                    to={`/user/fullHoardingUser/${hoarding._id}`}
+                    to={`/user/blank/bookingDetails/${hoarding._id}`}
                     className="btn btn-primary btn-hover-scale mt-auto align-self-stretch"
                   >
                     <i className="bi bi-arrow-right me-2"></i>

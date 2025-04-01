@@ -1,0 +1,185 @@
+/* ViewAllAds.css */
+
+.view-ads-container {
+  max-width: 1200px;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+  margin: 2rem auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #2b6cb0, #4299e1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.text-gradient::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(90deg, #4299e1 0%, #2b6cb0 100%);
+  border-radius: 2px;
+}
+
+.ad-card {
+  border: none;
+  border-radius: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.ad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+}
+
+.image-wrapper {
+  overflow: hidden;
+  position: relative;
+  background: #e2e8f0;
+}
+
+.ad-image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-link:hover .ad-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-link:hover .image-overlay {
+  opacity: 1;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.badge-city {
+  background: #e2e8f0;
+  color: #64748b;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.card-text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #64748b;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dates {
+  font-size: 0.875rem;
+  color: #475569;
+  background: rgba(226, 232, 240, 0.4);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-top: auto;
+}
+
+.dates strong {
+  color: #475569;
+  font-weight: 500;
+}
+
+.no-ads-container {
+  padding: 4rem 2rem;
+  background: #f8fafc;
+  border-radius: 1rem;
+  border: 2px dashed #cbd5e1;
+  transition: background 0.3s ease;
+}
+
+.no-ads-container:hover {
+  background: #f1f5f9;
+}
+
+.no-ads-container i {
+  font-size: 3.5rem;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.no-ads-container p {
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+.loading-container {
+  min-height: 300px;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Background styles */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #f3f9ff 0%, #e3f2fd 100%);
+  z-index: -1;
+}
+
+.background-deco {
+  position: fixed;
+  z-index: -1;
+  opacity: 0.15;
+}
+
+.background-deco.circle {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #4299e1, #90cdf4);
+  filter: blur;
+}

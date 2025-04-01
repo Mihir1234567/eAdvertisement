@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./assets/adminlte.css";
 import "./assets/adminlte.min.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { UserProfile } from "./components/user/UserProfile";
 import { AgencySidebar } from "./Components/agency/AgencySidebar";
 // import { AgencyForm } from "./Components/agency/AgencyForm";
@@ -18,13 +18,17 @@ import { FullHoarding } from "./Components/agency/FullHoarding";
 import { UpdateHoarding } from "./Components/agency/UpdateHoarding";
 import { FullBookedHoarding } from "./Components/user/Fullbookedhosrding";
 import { ViewHoardings } from "./Components/user/ViewHoardings";
-import { Booking } from "./Components/user/Booking";
+// import { Booking } from "./Components/user/Booking";
 import { ViewYourBookings } from "./Components/user/ViewYourBookings";
 import { SignUp } from "./Components/common/SignUp";
 import { ResetPassword } from "./Components/common/ResetPAssword";
 import { ForgotPassword } from "./Components/common/ForgotPassword";
 import { Login } from "./Components/common/Login";
+import { AddAdvertisement } from "./Components/user/AddAdvertisement";
+import { ViewAllAds } from "./Components/user/ViewAllAds";
+import { BookingDetails } from "./Components/user/BookingDetails";
 function App() {
+
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
   useEffect(() => {
@@ -40,6 +44,8 @@ function App() {
       class={
         location.pathname === "/login" ||
         location.pathname === "/Signup" ||
+        location.pathname === "/forgotPassword" ||
+        location.pathname === `/resetPassword` ||
         location.pathname === "/"
           ? ""
           : "app-wrapper"
@@ -60,6 +66,7 @@ function App() {
         ></Route>
 
         <Route element={<PrivateRoutes></PrivateRoutes>}>
+          {/* ------------------------------- userRoutes ------------------------------- */}
           <Route path="/user/:status" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>
             <Route
@@ -70,12 +77,25 @@ function App() {
               path="fullHoardingUser/:id"
               element={<FullBookedHoarding></FullBookedHoarding>}
             ></Route>
-            <Route path="booking/:id" element={<Booking></Booking>}></Route>
+            {/* <Route path="booking/:id" element={<Booking></Booking>}></Route> */}
             <Route
               path="viewBookings"
               element={<ViewYourBookings></ViewYourBookings>}
             ></Route>
+            <Route
+              path="addAd"
+              element={<AddAdvertisement></AddAdvertisement>}
+            ></Route>
+            <Route
+              path="viewYourAds"
+              element={<ViewAllAds></ViewAllAds>}
+            ></Route>
+            <Route
+              path="bookingDetails/:id"
+              element={<BookingDetails></BookingDetails>}
+            ></Route>
           </Route>
+          {/* ------------------------------ agencyRoutes ------------------------------ */}
           <Route
             path="/agency/:status"
             element={<AgencySidebar></AgencySidebar>}
