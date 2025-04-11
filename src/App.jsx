@@ -4,7 +4,6 @@ import viteLogo from "/vite.svg";
 import "./assets/adminlte.css";
 import "./assets/adminlte.min.css";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
-import { UserProfile } from "./components/user/UserProfile";
 import { AgencySidebar } from "./Components/agency/AgencySidebar";
 // import { AgencyForm } from "./Components/agency/AgencyForm";
 import { UserSidebar } from "./Components/layouts/UserSidebar";
@@ -21,14 +20,15 @@ import { ViewHoardings } from "./Components/user/ViewHoardings";
 // import { Booking } from "./Components/user/Booking";
 import { ViewYourBookings } from "./Components/user/ViewYourBookings";
 import { SignUp } from "./Components/common/SignUp";
-import { ResetPassword } from "./Components/common/ResetPAssword";
+
 import { ForgotPassword } from "./Components/common/ForgotPassword";
 import { Login } from "./Components/common/Login";
 import { AddAdvertisement } from "./Components/user/AddAdvertisement";
 import { ViewAllAds } from "./Components/user/ViewAllAds";
 import { BookingDetails } from "./Components/user/BookingDetails";
+import { UserProfile } from "./Components/user/UserProfile";
+import { ResetPassword } from "./Components/common/ResetPassword";
 function App() {
-
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
   useEffect(() => {

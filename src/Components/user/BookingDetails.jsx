@@ -169,7 +169,7 @@ export const BookingDetails = () => {
           <footer className="mt-5">
             <div className="d-flex flex-column flex-lg-row gap-3">
               <Link
-                to={`/user/blank/booking`}
+                to={`/user/blank/viewBookings`}
                 className="btn btn-primary btn-hover-scale px-4 py-3 flex-grow-1 text-center"
               >
                 <i className="bi bi-arrow-left me-2"></i>

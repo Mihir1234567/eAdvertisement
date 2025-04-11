@@ -13,22 +13,51 @@ export const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const status = useParams().status;
-  const submitHandler = async (data) => {
-    const res = await axios.post("/user/login", data);
-    console.log(res);
-    console.log(res.response?.data?.message);
 
-    if (res.status === 200) {
-      localStorage.setItem("id", res.data.data._id);
-      localStorage.setItem("role", res.data.data.roleId.name);
-      if (res.data.data.roleId.name === "User") {
-        setTimeout(() => {
-          navigate("/user/loggedin");
-        }, 2000);
+  const submitHandler = async (data) => {
+    try {
+      const res = await axios.post("/user/login", data);
+      console.log(res);
+      console.log(res.response?.data?.message);
+
+      if (res.status === 200) {
+        localStorage.setItem("id", res.data.data._id);
+        localStorage.setItem("role", res.data.data.roleId.name);
+        if (res.data.data.roleId.name === "User") {
+          setTimeout(() => {
+            navigate("/user/loggedin");
+          }, 2000);
+        } else {
+          setTimeout(() => {
+            navigate("/agency/loggedin");
+          }, 2000);
+        }
+      }
+    } catch (error) {
+      if (error.response.data.message) {
+        toast.warn(`${error.response.data.message}`, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
       } else {
-        setTimeout(() => {
-          navigate("/agency/loggedin");
-        }, 2000);
+        toast.error("Some Thing Went Wrong!!!", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
       }
     }
   };
@@ -138,6 +167,9 @@ export const Login = () => {
           </div>
           <div>
             Forget Password <Link to="/forgotPassword">Forget Password?</Link>
+          </div>
+          <div>
+            <Link to="/">Home Page</Link>
           </div>
         </form>
       </div>

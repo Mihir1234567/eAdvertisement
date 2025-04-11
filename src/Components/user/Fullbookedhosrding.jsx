@@ -10,29 +10,11 @@ export const FullBookedHoarding = () => {
   const [getAds, setGetAds] = useState([]);
   const [selectedAd, setSelectAd] = useState(null);
   const userID = localStorage.getItem("id");
-  const object = {
-    Clint_Id: userID,
-    Hoarding_Id: id,
-    AdId: selectedAd,
-  };
 
-  const submitHandler = async () => {
-    try {
-      const res = await axios.post(`/booking/addBooking`, object);
-      // console.log(res);
-
-      if (res.status === 201) {
-        const res = await axios.put(`/hording/updateHoardingForBooking/${id}`, {
-          AvailabilityStatus: false,
-        });
-        // console.log(res.data.data);
-
-        navigate(-1);
-      }
-    } catch (error) {
-      console.error("Error booking hoarding:", error);
-    }
-  };
+  useEffect(() => {
+    getHoardingById();
+    getAdvertisementByUserId();
+  }, []);
 
   const getHoardingById = async () => {
     try {
@@ -52,10 +34,131 @@ export const FullBookedHoarding = () => {
     }
   };
 
-  useEffect(() => {
-    getHoardingById();
-    getAdvertisementByUserId();
-  }, []);
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const payNow = async () => {
+    if (!selectedAd) {
+      alert("Please select an advertisement first.");
+      return;
+    }
+
+    const isScriptLoaded = await loadRazorpayScript();
+    if (!isScriptLoaded) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    try {
+      const amount = 500000; // ₹5000 in paise
+      const receipt = `receipt_${Date.now()}`;
+
+      // STEP 1: Create Razorpay Order
+      const { data: order } = await axios.post("/payment/createOrder", {
+        amount,
+        receipt,
+      });
+
+      console.log("✅ Order created:", order);
+
+      if (!order.data.id) {
+        console.error("❌ Order ID missing from backend");
+        return alert("Something went wrong while creating order.");
+      }
+
+      // STEP 2: Initialize Razorpay
+      const options = {
+        key: "rzp_test_VviWfcUojQnAKT",
+        amount: order.data.amount,
+        currency: "INR",
+        name: "E-Advertising",
+        description: "Hoarding Booking",
+        order_id: order.data.id,
+        handler: async function (response) {
+          console.log("✅ Razorpay response:", response);
+
+          const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+            response;
+
+          if (
+            !razorpay_order_id ||
+            !razorpay_payment_id ||
+            !razorpay_signature
+          ) {
+            return alert("Incomplete payment data received.");
+          }
+
+          // STEP 3: Verify Signature
+          const verifyRes = await axios.post("/payment/verifyPayment", {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+          });
+
+          if (verifyRes.data.success) {
+            try {
+              // STEP 4: Add Booking
+              const bookingRes = await axios.post(`/booking/addBooking`, {
+                Clint_Id: userID,
+                Hoarding_Id: id,
+                AdId: selectedAd,
+              });
+
+              if (bookingRes.status === 201) {
+                const updateRes = await axios.put(
+                  `/hording/updateHoardingForBooking/${id}`,
+                  { AvailabilityStatus: false }
+                );
+
+                // STEP 5: Save Payment Info
+                await axios.post("/payment/addPayments", {
+                  Client_Id: userID,
+                  Booking_Id: bookingRes.data._id,
+                  razorpay_order_id,
+                  razorpay_payment_id,
+                });
+
+                if (updateRes.status === 200) {
+                  alert("✅ Payment successful and hoarding booked!");
+                  navigate("/user/blank/viewHoardings");
+                } else {
+                  alert("⚠️ Hoarding booked but availability update failed.");
+                }
+              } else {
+                alert("⚠️ Payment succeeded but booking failed.");
+              }
+            } catch (error) {
+              console.error("❌ Error during booking:", error);
+              alert("Something went wrong after payment.");
+            }
+          } else {
+            alert("❌ Payment verification failed.");
+          }
+        },
+        prefill: {
+          name: "User",
+          email: "user@example.com",
+        },
+        theme: {
+          color: "#0d6efd",
+        },
+      };
+
+      console.log("🔧 Razorpay options:", options);
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error("❌ Error during Razorpay flow:", err);
+      alert("Something went wrong while processing your payment.");
+    }
+  };
 
   if (!getHoarding) {
     return (
@@ -75,7 +178,6 @@ export const FullBookedHoarding = () => {
     <div className="container my-5">
       <div className="card shadow border-0">
         <div className="row g-0">
-          {/* Image Section */}
           <div className="col-lg-7">
             <div className="ratio ratio-4x3 position-relative rounded overflow-hidden">
               <img
@@ -83,12 +185,10 @@ export const FullBookedHoarding = () => {
                 alt="Hoarding Visual"
                 className="img-fluid w-100 h-100"
               />
-              {/* Static overlay using Bootstrap opacity classes */}
               <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
             </div>
           </div>
 
-          {/* Details Section */}
           <div className="col-lg-5 bg-light">
             <div className="card-body p-4">
               <header className="mb-4">
@@ -102,7 +202,6 @@ export const FullBookedHoarding = () => {
               </header>
 
               <section className="mb-4">
-                {/* Pricing Card */}
                 <div className="p-4 mb-4 bg-primary text-white rounded shadow-sm d-flex justify-content-between align-items-center">
                   <div>
                     <h3 className="h2 fw-bold mb-0">
@@ -121,7 +220,6 @@ export const FullBookedHoarding = () => {
                   </span>
                 </div>
 
-                {/* Specifications */}
                 <div className="mb-4">
                   <DetailItem label="Dimensions" icon="bi-aspect-ratio">
                     <span className="fw-medium text-dark">
@@ -143,7 +241,6 @@ export const FullBookedHoarding = () => {
                   </DetailItem>
                 </div>
 
-                {/* Location Details */}
                 <div className="p-3 mb-4 bg-primary bg-opacity-10 rounded">
                   <DetailItem label="Area" icon="bi-pin-map">
                     <span className="fw-medium text-dark">
@@ -162,7 +259,6 @@ export const FullBookedHoarding = () => {
                   </DetailItem>
                 </div>
 
-                {/* Advertisement Select */}
                 <div className="p-3 mb-4 bg-primary bg-opacity-10 rounded">
                   <select
                     className="form-select"
@@ -181,20 +277,18 @@ export const FullBookedHoarding = () => {
               <footer className="mt-5">
                 <div className="d-flex flex-column flex-lg-row gap-3">
                   <Link
-                    to={`/user/blank/booking`}
+                    to={`/user/blank/viewHoardings`}
                     className="btn btn-primary px-4 py-3 flex-grow-1 text-center"
                   >
                     <i className="bi bi-arrow-left me-2"></i>
                     Back
                   </Link>
                   <button
-                    onClick={() => {
-                      submitHandler();
-                    }}
+                    onClick={payNow}
                     className="btn btn-outline-primary px-4 py-3 flex-grow-1"
                   >
-                    <i className="bi bi-pencil-square me-2"></i>
-                    Book
+                    <i className="bi bi-cash-coin me-2"></i>
+                    Pay & Book
                   </button>
                 </div>
               </footer>

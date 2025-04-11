@@ -83,13 +83,6 @@ export const AgencySidebar = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                <Link to="hordingForm" className="nav-link active">
-                  <i className="nav-icon bi bi-speedometer" />
-                  <p>
-                    ADD SCREEN
-                    <i className="nav-arrow bi bi-chevron-right" />
-                  </p>
-                </Link>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
                     <Link to="displayHoarding" className="nav-link active">
@@ -100,10 +93,19 @@ export const AgencySidebar = () => {
                       </p>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link to="hordingForm" className="nav-link active">
+                      <i className="nav-icon bi bi-speedometer" />
+                      <p>
+                        ADD SCREEN
+                        <i className="nav-arrow bi bi-chevron-right" />
+                      </p>
+                    </Link>
+                  </li>
                 </ul>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon bi bi-box-seam-fill" />
                   <p>
@@ -131,7 +133,7 @@ export const AgencySidebar = () => {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>

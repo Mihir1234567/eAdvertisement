@@ -149,7 +149,6 @@ export const SignUp = () => {
                 {...register("password", validationSchema.passwordValidator)}
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
               <span className="errormsg">{errors.password?.message}</span>
             </div>
@@ -170,6 +169,10 @@ export const SignUp = () => {
             <div>
               Already Have An Account?
               <Link to="/login/blank">LogIn</Link>
+            </div>
+
+            <div>
+              <Link to="/">Home Page</Link>
             </div>
           </form>
         </div>
