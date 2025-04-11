@@ -102,6 +102,15 @@ export const AgencySidebar = () => {
                       </p>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link to="hoardingDetails" className="nav-link active">
+                      <i className="nav-icon bi bi-speedometer" />
+                      <p>
+                        BOOKED HOARDING DETAILS
+                        <i className="nav-arrow bi bi-chevron-right" />
+                      </p>
+                    </Link>
+                  </li>
                 </ul>
               </li>
 

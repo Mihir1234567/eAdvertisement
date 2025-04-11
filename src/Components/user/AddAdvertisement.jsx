@@ -27,8 +27,6 @@ export const AddAdvertisement = () => {
     formData.append("AdName", data.AdName);
     formData.append("image", data.image[0]);
     formData.append("AdContent", data.AdContent);
-    formData.append("startDate", data.startDate);
-    formData.append("endDate", data.endDate);
     formData.append("userID", data.userID);
 
     const res = await axios.post(`/ad/addAdvertisementWithFile`, formData);
@@ -65,22 +63,6 @@ export const AddAdvertisement = () => {
           className="input-field"
         />
         <span className="error-msg">{errors.AdContent?.message}</span>
-
-        <label>Start Date & Time</label>
-        <input
-          type="datetime-local"
-          {...register("startDate", validation.nameValidator)}
-          className="input-field"
-        />
-        <span className="error-msg">{errors.startDate?.message}</span>
-
-        <label>End Date & Time</label>
-        <input
-          type="datetime-local"
-          {...register("endDate", validation.nameValidator)}
-          className="input-field"
-        />
-        <span className="error-msg">{errors.endDate?.message}</span>
 
         <button type="submit" className="submit-btn">
           Register

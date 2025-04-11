@@ -7,6 +7,7 @@ export const ViewAllAds = () => {
   const [ads, setAds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAds = async () => {
@@ -16,7 +17,6 @@ export const ViewAllAds = () => {
         );
         setAds(response.data.data);
         console.log(response.data.data);
-        // console.log(response.data.data[0].addBannerUrl);
       } catch (err) {
         console.error("Error fetching ads:", err);
         setError("Failed to load ads. Please try again later.");
@@ -27,6 +27,20 @@ export const ViewAllAds = () => {
 
     fetchAds();
   }, []);
+
+  // Function to handle deletion of an ad.
+  const deleteAd = async (adId) => {
+  
+    try {
+      await axios.delete(`/ad/deleteAdvertisement/${adId}`);
+      // Remove the deleted ad from the state so that UI updates.
+      setAds((prevAds) => prevAds.filter((ad) => ad._id !== adId));
+      console.log(`Ad ${adId} deleted successfully`);
+    } catch (err) {
+      console.error("Error deleting ad:", err);
+      alert("Failed to delete ad. Please try again later.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -69,36 +83,33 @@ export const ViewAllAds = () => {
           </div>
         ) : (
           <div className="row g-4">
-            {ads.map(
-              ({ _id, AdURL, AdName, AdContent, startDate, endDate }) => (
-                <div key={_id || id} className="col-xl-4 col-md-6">
-                  <div className="card ad-card h-100 shadow-sm">
-                    <div className="image-wrapper ratio ratio-16x9 image-link">
-                      <img
-                        className="ad-image img-fluid rounded-top"
-                        src={AdURL}
-                        alt={`${AdName} advertisement`}
-                      />
-                      <div className="image-overlay"></div>
+            {ads.map(({ _id, AdURL, AdName, AdContent }) => (
+              <div key={_id} className="col-xl-4 col-md-6">
+                <div className="card ad-card h-100 shadow-sm">
+                  <div className="image-wrapper ratio ratio-16x9 image-link">
+                    <img
+                      className="ad-image img-fluid rounded-top"
+                      src={AdURL}
+                      alt={`${AdName} advertisement`}
+                    />
+                    <div className="image-overlay"></div>
+                  </div>
+                  <div className="card-body p-4">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <h5 className="card-title text-truncate">{AdName}</h5>
+                      {/* Delete Button */}
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => deleteAd(_id)}
+                      >
+                        Delete
+                      </button>
                     </div>
-                    <div className="card-body p-4">
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h5 className="card-title text-truncate">{AdName}</h5>
-                      </div>
-                      <p className="card-text text-muted mb-2">{AdContent}</p>
-                      <div className="dates">
-                        <p className="mb-1">
-                          <strong>Start:</strong> {startDate}
-                        </p>
-                        <p className="mb-0">
-                          <strong>End:</strong> {endDate}
-                        </p>
-                      </div>
-                    </div>
+                    <p className="card-text text-muted mb-2">{AdContent}</p>
                   </div>
                 </div>
-              )
-            )}
+              </div>
+            ))}
           </div>
         )}
       </div>

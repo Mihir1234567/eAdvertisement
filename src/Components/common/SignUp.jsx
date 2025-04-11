@@ -149,7 +149,9 @@ export const SignUp = () => {
                 {...register("password", validationSchema.passwordValidator)}
                 placeholder="Password"
                 value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+
               <span className="errormsg">{errors.password?.message}</span>
             </div>
             <div>

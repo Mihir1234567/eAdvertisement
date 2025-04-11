@@ -11,6 +11,12 @@ export const FullBookedHoarding = () => {
   const [selectedAd, setSelectAd] = useState(null);
   const userID = localStorage.getItem("id");
 
+  // Date and Cost Calculation States
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalHours, setTotalHours] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
+
   useEffect(() => {
     getHoardingById();
     getAdvertisementByUserId();
@@ -44,9 +50,40 @@ export const FullBookedHoarding = () => {
     });
   };
 
+  // Date calculation: calculates total booking hours and total cost.
+  const calculateCost = () => {
+    if (!startDate || !endDate) {
+      alert("Please select both start and end dates");
+      return;
+    }
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const hours = Math.ceil((end - start) / (1000 * 60 * 60)); // round up to next full hour
+
+    if (hours > 0) {
+      setTotalHours(hours);
+      // Use the hoarding's hourly rate (if available) to calculate the cost.
+      const rate = getHoarding?.hourlyRate || 0;
+      setTotalCost(hours * rate);
+    } else {
+      alert("End time must be after start time");
+      setTotalHours(0);
+      setTotalCost(0);
+    }
+  };
+
   const payNow = async () => {
+    console.log("payNow function called");
+
     if (!selectedAd) {
       alert("Please select an advertisement first.");
+      return;
+    }
+
+    if (totalCost <= 0) {
+      alert(
+        "Please calculate the cost by selecting valid start and end times."
+      );
       return;
     }
 
@@ -57,7 +94,7 @@ export const FullBookedHoarding = () => {
     }
 
     try {
-      const amount = 500000; // ₹5000 in paise
+      const amount = totalCost * 100; // Amount now comes from the date calculation
       const receipt = `receipt_${Date.now()}`;
 
       // STEP 1: Create Razorpay Order
@@ -83,10 +120,8 @@ export const FullBookedHoarding = () => {
         order_id: order.data.id,
         handler: async function (response) {
           console.log("✅ Razorpay response:", response);
-
           const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
             response;
-
           if (
             !razorpay_order_id ||
             !razorpay_payment_id ||
@@ -104,11 +139,16 @@ export const FullBookedHoarding = () => {
 
           if (verifyRes.data.success) {
             try {
-              // STEP 4: Add Booking
+              // STEP 4: Add Booking (including date/time details)
               const bookingRes = await axios.post(`/booking/addBooking`, {
                 Clint_Id: userID,
                 Hoarding_Id: id,
                 AdId: selectedAd,
+                Payment_Status: true,
+                startDate: startDate,
+                endDate: endDate,
+                totalHours: totalHours,
+                Total_Cost: totalCost,
               });
 
               if (bookingRes.status === 201) {
@@ -272,6 +312,43 @@ export const FullBookedHoarding = () => {
                     ))}
                   </select>
                 </div>
+
+                <div className="mb-4">
+                  <label className="form-label">Start Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="form-label">End Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <button onClick={calculateCost} className="btn btn-secondary">
+                    Calculate Cost
+                  </button>
+                </div>
+
+                {totalHours > 0 && (
+                  <div className="mb-4">
+                    <p>
+                      <strong>Total Hours:</strong> {totalHours} hour(s)
+                    </p>
+                    <p>
+                      <strong>Total Cost:</strong> ₹{totalCost}
+                    </p>
+                  </div>
+                )}
               </section>
 
               <footer className="mt-5">

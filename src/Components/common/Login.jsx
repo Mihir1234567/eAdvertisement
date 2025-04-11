@@ -150,7 +150,7 @@ export const Login = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="text"
+              type="password"
               className="form-control"
               id="password"
               {...register("password", validationSchema.passwordValidator)}

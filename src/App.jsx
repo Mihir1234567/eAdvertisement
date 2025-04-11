@@ -28,6 +28,7 @@ import { ViewAllAds } from "./Components/user/ViewAllAds";
 import { BookingDetails } from "./Components/user/BookingDetails";
 import { UserProfile } from "./Components/user/UserProfile";
 import { ResetPassword } from "./Components/common/ResetPassword";
+import { HoardingBookingDetails } from "./Components/agency/HoardingBookingDetails";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -113,6 +114,10 @@ function App() {
               <Route index element={<DisplayHoardings />} />
               <Route path="fullHoarding/:id" element={<FullHoarding />} />
             </Route>
+            <Route
+              path="hoardingDetails"
+              element={<HoardingBookingDetails></HoardingBookingDetails>}
+            ></Route>
           </Route>
         </Route>
       </Routes>
