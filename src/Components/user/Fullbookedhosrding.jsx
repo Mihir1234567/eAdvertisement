@@ -160,7 +160,8 @@ export const FullBookedHoarding = () => {
                 // STEP 5: Save Payment Info
                 await axios.post("/payment/addPayments", {
                   Client_Id: userID,
-                  Booking_Id: bookingRes.data._id,
+                  Booking_Id: bookingRes.data.data._id,
+                  Amount: amount / 100,
                   razorpay_order_id,
                   razorpay_payment_id,
                 });

@@ -29,6 +29,7 @@ import { BookingDetails } from "./Components/user/BookingDetails";
 import { UserProfile } from "./Components/user/UserProfile";
 import { ResetPassword } from "./Components/common/ResetPassword";
 import { HoardingBookingDetails } from "./Components/agency/HoardingBookingDetails";
+import { AdminDashboard } from "./Components/admin/AdminDashbord";
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
   const location = useLocation();
@@ -45,6 +46,7 @@ function App() {
       class={
         location.pathname === "/login" ||
         location.pathname === "/Signup" ||
+        location.pathname === "/finalBoss" ||
         location.pathname === "/forgotPassword" ||
         location.pathname === `/resetPassword` ||
         location.pathname === "/"
@@ -65,7 +67,7 @@ function App() {
           path="/forgotPassword"
           element={<ForgotPassword></ForgotPassword>}
         ></Route>
-
+        <Route path="/finalBoss" element={<AdminDashboard />}></Route>
         <Route element={<PrivateRoutes></PrivateRoutes>}>
           {/* ------------------------------- userRoutes ------------------------------- */}
           <Route path="/user/:status" element={<UserSidebar></UserSidebar>}>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import "./BookingTable.css";
 
 export const HoardingBookingDetails = () => {
   const [bookings, setBookings] = useState([]);
@@ -7,7 +8,6 @@ export const HoardingBookingDetails = () => {
   const getBookings = async () => {
     try {
       const res = await axios.get("/booking");
-      console.log("Booking Response:", res.data);
       setBookings(res.data.data);
     } catch (error) {
       console.error("Error fetching bookings:", error);
@@ -19,59 +19,58 @@ export const HoardingBookingDetails = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Booked Hoardings</h2>
+    <div className="container py-5">
+      <div className="mb-4 text-center">
+        <h2 className="section-title">📋 Booked Hoardings Overview</h2>
+        <p className="text-muted">
+          View all hoardings booked by users under your agency.
+        </p>
+      </div>
+
       {bookings.length === 0 ? (
-        <p>No bookings found</p>
+        <div className="text-center">
+          <p className="alert alert-warning">No bookings found</p>
+        </div>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th style={thStyle}>Hoarding</th>
-              <th style={thStyle}>Type</th>
-              <th style={thStyle}>Dimension</th>
-              <th style={thStyle}>Rate (₹/hr)</th>
-              <th style={thStyle}>Booked By</th>
-              <th style={thStyle}>Client Age</th>
-              <th style={thStyle}>Booking ID</th>
-              <th style={thStyle}>Ad ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking._id}>
-                <td style={tdStyle}>
-                  <img
-                    src={booking.Hoarding_Id.hordingURL}
-                    alt="Hoarding"
-                    style={{ width: "100px", borderRadius: "6px" }}
-                  />
-                </td>
-                <td style={tdStyle}>{booking.Hoarding_Id.hordingType}</td>
-                <td style={tdStyle}>{booking.Hoarding_Id.hordingDimension}</td>
-                <td style={tdStyle}>{booking.Hoarding_Id.hourlyRate}</td>
-                <td style={tdStyle}>{booking.Clint_Id.email}</td>
-                <td style={tdStyle}>{booking.Clint_Id.age}</td>
-                <td style={tdStyle}>{booking._id}</td>
-                <td style={tdStyle}>{booking.AdId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="card shadow-lg p-4">
+          <div className="table-responsive">
+            <table className="table custom-table table-hover align-middle">
+              <thead className="table-dark">
+                <tr>
+                  <th>Hoarding</th>
+                  <th>Type</th>
+                  <th>Dimension</th>
+                  <th>Rate (₹/hr)</th>
+                  <th>Booked By</th>
+                  <th>Age</th>
+                  <th>Booking ID</th>
+                  <th>Ad ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((booking) => (
+                  <tr key={booking._id}>
+                    <td>
+                      <img
+                        src={booking.Hoarding_Id.hordingURL}
+                        alt="Hoarding"
+                        className="hoarding-img"
+                      />
+                    </td>
+                    <td>{booking.Hoarding_Id.hordingType}</td>
+                    <td>{booking.Hoarding_Id.hordingDimension}</td>
+                    <td>₹{booking.Hoarding_Id.hourlyRate}</td>
+                    <td>{booking.Clint_Id.email}</td>
+                    <td>{booking.Clint_Id.age}</td>
+                    <td className="small-text">{booking._id}</td>
+                    <td className="small-text">{booking.AdId}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </div>
   );
-};
-
-const thStyle = {
-  border: "1px solid #ccc",
-  padding: "10px",
-  background: "#f4f4f4",
-  textAlign: "left",
-};
-
-const tdStyle = {
-  border: "1px solid #ccc",
-  padding: "10px",
-  verticalAlign: "top",
 };
