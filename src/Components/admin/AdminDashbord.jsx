@@ -30,6 +30,9 @@ export const AdminDashboard = () => {
   const [recentBookings, setRecentBookings] = useState([]);
   const [topAgencies, setTopAgencies] = useState([]);
 
+  const [notAvailable, setNotAvailable] = useState(0);
+  const [available, setAvailable] = useState(0);
+
   useEffect(() => {
     fetchStats();
     fetchRecentBookings();
@@ -48,10 +51,21 @@ export const AdminDashboard = () => {
 
       const users = user.filter((u) => u.roleId.name === "User").length;
       setUsers(users);
+
       const agency = user.filter((u) => u.roleId.name === "Agency").length;
       setAgencies(agency);
+
       setHoardings(hoarding.length);
       setBookings(booking.length);
+      const availableCount = hoarding.filter(
+        (h) => h.AvailabilityStatus === true
+      ).length;
+      const notAvailableCount = hoarding.filter(
+        (h) => h.AvailabilityStatus === false
+      ).length;
+
+      setNotAvailable(notAvailableCount);
+      setAvailable(availableCount);
     } catch (err) {
       console.error("Error fetching stats:", err);
     }
@@ -86,7 +100,7 @@ export const AdminDashboard = () => {
     labels: ["Available", "Booked"],
     datasets: [
       {
-        data: [60, 40],
+        data: [available, notAvailable],
         backgroundColor: ["#28a745", "#dc3545"],
         hoverOffset: 4,
       },
