@@ -1,9 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+} from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
+);
 
 export const AdminDashboard = () => {
   const [users, setUsers] = useState(0);
@@ -12,13 +29,11 @@ export const AdminDashboard = () => {
   const [bookings, setBookings] = useState(0);
   const [recentBookings, setRecentBookings] = useState([]);
   const [topAgencies, setTopAgencies] = useState([]);
-  const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     fetchStats();
     fetchRecentBookings();
     fetchTopAgencies();
-    fetchChartData();
   }, []);
 
   const fetchStats = async () => {
@@ -35,26 +50,16 @@ export const AdminDashboard = () => {
       setUsers(users);
       const agency = user.filter((u) => u.roleId.name === "Agency").length;
       setAgencies(agency);
-      const hoardings = hoarding.length;
-      setHoardings(hoardings);
-      const bookings = booking.length;
-      setBookings(bookings);
+      setHoardings(hoarding.length);
+      setBookings(booking.length);
     } catch (err) {
       console.error("Error fetching stats:", err);
     }
   };
-  const stats = [
-    { title: "Total Users", value: users },
-    { title: "Total Agencies ", value: agencies },
-    { title: "Total Hoardings", value: hoardings },
-    { title: "Total Bookings", value: bookings },
-  ];
 
   const fetchRecentBookings = async () => {
     try {
       const { data } = await axios.get("/booking/");
-      console.log("data", data.data);
-
       setRecentBookings(data.data.slice(0, 5));
     } catch (err) {
       console.error("Error fetching recent bookings:", err);
@@ -70,48 +75,34 @@ export const AdminDashboard = () => {
     }
   };
 
-  //   const fetchChartData = async () => {
-  //   try {
-  //     const response = await axios.get("/hording/getAllHoardings");
-  //     console.log("Hoarding data:", response.data.data); // Check the actual data
+  const stats = [
+    { title: "Total Users", value: users },
+    { title: "Total Agencies", value: agencies },
+    { title: "Total Hoardings", value: hoardings },
+    { title: "Total Bookings", value: bookings },
+  ];
 
-  //     const hoardings = response.data.data;
+  const pieData = {
+    labels: ["Available", "Booked"],
+    datasets: [
+      {
+        data: [60, 40],
+        backgroundColor: ["#28a745", "#dc3545"],
+        hoverOffset: 4,
+      },
+    ],
+  };
 
-  //     if (!hoardings || hoardings.length === 0) {
-  //       setChartData(null);
-  //       return;
-  //     }
-
-  //     let available = 0;
-  //     let booked = 0;
-
-  //     hoardings.forEach((h) => {
-  //       // Check if isAvailable is a string or boolean
-  //       const isAvailable = h.isAvailable === true || h.isAvailable === false;
-  //       if (isAvailable) {
-  //         available++;
-  //       } else {
-  //         booked++;
-  //       }
-  //     });
-
-  //     console.log(`Available: ${available}, Booked: ${booked}`); // Debug counts
-
-  //     setChartData({
-  //       labels: ["Available", "Booked"],
-  //       datasets: [
-  //         {
-  //           data: [available, booked],
-  //           backgroundColor: ["#28a745", "#dc3545"],
-  //           hoverOffset: 4, // Improves pie chart interactivity
-  //         },
-  //       ],
-  //     });
-  //   } catch (err) {
-  //     console.error("Error fetching chart data:", err);
-  //     setChartData(null);
-  //   }
-  // };
+  const barData = {
+    labels: ["Users", "Agencies", "Hoardings", "Bookings"],
+    datasets: [
+      {
+        label: "Platform Stats",
+        data: [users, agencies, hoardings, bookings],
+        backgroundColor: "#007bff",
+      },
+    ],
+  };
 
   return (
     <div className="container my-5">
@@ -120,24 +111,37 @@ export const AdminDashboard = () => {
       {/* Stat Cards */}
       <div className="row mb-4">
         {stats.map((stat, index) => (
-          <div key={index} className="col-md-2 mb-3">
+          <div key={index} className="col-md-3 mb-3">
             <div className="card text-center shadow-sm">
               <div className="card-body">
                 <h6 className="card-title text-muted">{stat.title}</h6>
-                <h4 className="fw-bold"> {stat.value}</h4>
+                <h4 className="fw-bold">{stat.value}</h4>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Chart <div className="card mb-4 shadow-sm">
-        <div className="card-body">
-          <h5 className="card-title">Hoarding Status</h5>
-          {chartData ? <Pie data={chartData} /> : <div>Loading chart...</div>}
+      {/* Charts Section */}
+      <div className="row mb-4">
+        <div className="col-md-6 mb-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Hoarding Status (Pie Chart)</h5>
+              <Pie data={pieData} />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-6 mb-3">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Stats Overview (Bar Chart)</h5>
+              <Bar data={barData} />
+            </div>
+          </div>
         </div>
       </div>
-*/}
 
       {/* Recent Bookings */}
       <div className="card mb-4 shadow-sm">
@@ -149,7 +153,7 @@ export const AdminDashboard = () => {
                 <tr>
                   <th>ID</th>
                   <th>User Email</th>
-                  <th>hordingType</th>
+                  <th>Hoarding Type</th>
                   <th>Hourly Rate</th>
                 </tr>
               </thead>
@@ -168,7 +172,7 @@ export const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Top Agencies */}
+      {/* You can add Top Agencies here if needed */}
     </div>
   );
 };

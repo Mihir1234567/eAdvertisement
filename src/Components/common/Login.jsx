@@ -27,10 +27,15 @@ export const Login = () => {
           setTimeout(() => {
             navigate("/user/loggedin");
           }, 2000);
-        } else {
+        } else if (res.data.data.roleId.name === "Agency") {
           setTimeout(() => {
             navigate("/agency/loggedin");
           }, 2000);
+        } else {
+           setTimeout(() => {
+             navigate("/finalBoss");
+           }, 2000);
+         
         }
       }
     } catch (error) {

@@ -67,8 +67,8 @@ function App() {
           path="/forgotPassword"
           element={<ForgotPassword></ForgotPassword>}
         ></Route>
-        <Route path="/finalBoss" element={<AdminDashboard />}></Route>
         <Route element={<PrivateRoutes></PrivateRoutes>}>
+        <Route path="/finalBoss" element={<AdminDashboard />}></Route>
           {/* ------------------------------- userRoutes ------------------------------- */}
           <Route path="/user/:status" element={<UserSidebar></UserSidebar>}>
             <Route path="profile" element={<UserProfile></UserProfile>}></Route>
